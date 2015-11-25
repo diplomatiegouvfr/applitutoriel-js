@@ -1,0 +1,412 @@
+{"tableau":  {
+    "nbTotal": 19,
+    "liste": [
+        {
+            "id": 21,
+            "ville": {
+                "id": 2664,
+                "libelle": "Paris",
+                "pays": {
+                    "id": 62,
+                    "nationalite": "française",
+                    "libelle": "France"
+                }
+            },
+            "civilite": {
+                "id": 2,
+                "libelle": "M."
+            },
+            "nationalite": {
+                "id": 62,
+                "nationalite": "française",
+                "libelle": null
+            },
+            "isClient": true,
+            "isVIP": false,
+            "isVIPFiltre": null,
+            "nom": "SOLAU",
+            "prenom": "Pierre",
+            "nomLocal": null,
+            "prenomLocal": null,
+            "fonction": null,
+            "proTelFixe": null,
+            "proTelPort": null,
+            "proCourriel": "pierre.solau@bouygues.net",
+            "proFax": null,
+            "proAdrCP": "75000",
+            "proAdrRue": "22 bis rue du grand chemin",
+            "assistNom": null,
+            "assistPrenom": null,
+            "assistTel": null,
+            "assistCourriel": null,
+            "commentaire": null,
+            "organisme": "Organisme 5",
+            "dateCrea": 982450800000,
+            "dateModif": 990828000000,
+            "labelIsVIP": "non"
+        },
+
+        {
+            "id": 89,
+            "ville": {
+                "id": 2664,
+                "libelle": "Paris",
+                "pays": {
+                    "id": 62,
+                    "nationalite": "française",
+                    "libelle": "France"
+                }
+            },
+            "civilite": {
+                "id": 2,
+                "libelle": "M."
+            },
+            "nationalite": {
+                "id": 62,
+                "nationalite": "française",
+                "libelle": null
+            },
+            "isClient": true,
+            "isVIP": true,
+            "isVIPFiltre": null,
+            "nom": "SILVA",
+            "prenom": "James",
+            "nomLocal": null,
+            "prenomLocal": null,
+            "fonction": null,
+            "proTelFixe": null,
+            "proTelPort": null,
+            "proCourriel": "james.silva@gmail.com",
+            "proFax": null,
+            "proAdrCP": "75000",
+            "proAdrRue": "17 bis rue de l'auberge",
+            "assistNom": null,
+            "assistPrenom": null,
+            "assistTel": null,
+            "assistCourriel": null,
+            "commentaire": null,
+            "organisme": "Organisme 2",
+            "dateCrea": 1086127200000,
+            "dateModif": 1127080800000,
+            "labelIsVIP": "oui"
+        },
+
+        {
+            "id": 81,
+            "ville": {
+                "id": 2664,
+                "libelle": "Paris",
+                "pays": {
+                    "id": 62,
+                    "nationalite": "française",
+                    "libelle": "France"
+                }
+            },
+            "civilite": {
+                "id": 2,
+                "libelle": "M."
+            },
+            "nationalite": {
+                "id": 62,
+                "nationalite": "française",
+                "libelle": null
+            },
+            "isClient": true,
+            "isVIP": false,
+            "isVIPFiltre": null,
+            "nom": "SILVA",
+            "prenom": "Paul",
+            "nomLocal": null,
+            "prenomLocal": null,
+            "fonction": null,
+            "proTelFixe": null,
+            "proTelPort": null,
+            "proCourriel": "paul.silva@hotmail.com",
+            "proFax": null,
+            "proAdrCP": "75000",
+            "proAdrRue": "24 ter boulevard de la clairière",
+            "assistNom": null,
+            "assistPrenom": null,
+            "assistTel": null,
+            "assistCourriel": null,
+            "commentaire": null,
+            "organisme": "Organisme 2",
+            "dateCrea": 1424300400000,
+            "dateModif": 1424300400000,
+            "labelIsVIP": "non"
+        },
+
+        {
+            "id": 17,
+            "ville": {
+                "id": 2664,
+                "libelle": "Paris",
+                "pays": {
+                    "id": 62,
+                    "nationalite": "française",
+                    "libelle": "France"
+                }
+            },
+            "civilite": {
+                "id": 2,
+                "libelle": "M."
+            },
+            "nationalite": {
+                "id": 62,
+                "nationalite": "française",
+                "libelle": null
+            },
+            "isClient": true,
+            "isVIP": false,
+            "isVIPFiltre": null,
+            "nom": "SILVA",
+            "prenom": "Noa",
+            "nomLocal": null,
+            "prenomLocal": null,
+            "fonction": null,
+            "proTelFixe": null,
+            "proTelPort": null,
+            "proCourriel": "noa.silva@free.fr",
+            "proFax": null,
+            "proAdrCP": "75000",
+            "proAdrRue": "37 bis boulevard du chemin Vert",
+            "assistNom": null,
+            "assistPrenom": null,
+            "assistTel": null,
+            "assistCourriel": null,
+            "commentaire": null,
+            "organisme": "Organisme 1",
+            "dateCrea": 985302000000,
+            "dateModif": 992556000000,
+            "labelIsVIP": "non"
+        },
+        {
+            "id": 97,
+            "ville": {
+                "id": 2664,
+                "libelle": "Paris",
+                "pays": {
+                    "id": 62,
+                    "nationalite": "française",
+                    "libelle": "France"
+                }
+            },
+            "civilite": {
+                "id": 2,
+                "libelle": "M."
+            },
+            "nationalite": {
+                "id": 62,
+                "nationalite": "française",
+                "libelle": null
+            },
+            "isClient": true,
+            "isVIP": true,
+            "isVIPFiltre": null,
+            "nom": "ROBERT",
+            "prenom": "Paul",
+            "nomLocal": null,
+            "prenomLocal": null,
+            "fonction": null,
+            "proTelFixe": null,
+            "proTelPort": null,
+            "proCourriel": "paul.robert@sfr.fr",
+            "proFax": null,
+            "proAdrCP": "75000",
+            "proAdrRue": "21 rue de la forêt",
+            "assistNom": null,
+            "assistPrenom": null,
+            "assistTel": null,
+            "assistCourriel": null,
+            "commentaire": null,
+            "organisme": "Organisme 2",
+            "dateCrea": 1095199200000,
+            "dateModif": 1294268400000,
+            "labelIsVIP": "oui"
+        },
+
+        {
+            "id": 1,
+            "ville": {
+                "id": 2439,
+                "libelle": "Berlin",
+                "pays": {
+                    "id": 5,
+                    "nationalite": "allemande",
+                    "libelle": "Allemagne"
+                }
+            },
+            "civilite": {
+                "id": 1,
+                "libelle": "Mme"
+            },
+            "nationalite": {
+                "id": 5,
+                "nationalite": "allemande",
+                "libelle": null
+            },
+            "isClient": true,
+            "isVIP": true,
+            "isVIPFiltre": null,
+            "nom": "ROBERT",
+            "prenom": "Michèle",
+            "nomLocal": null,
+            "prenomLocal": null,
+            "fonction": "Président",
+            "proTelFixe": null,
+            "proTelPort": null,
+            "proCourriel": "michele.robert@vip.com",
+            "proFax": null,
+            "proAdrCP": "01000",
+            "proAdrRue": "3, Rue du Herta",
+            "assistNom": null,
+            "assistPrenom": null,
+            "assistTel": null,
+            "assistCourriel": null,
+            "commentaire": null,
+            "organisme": null,
+            "dateCrea": 978303600000,
+            "dateModif": 1341093600000,
+            "labelIsVIP": "oui"
+        },
+
+        {
+            "id": 9,
+            "ville": {
+                "id": 2664,
+                "libelle": "Paris",
+                "pays": {
+                    "id": 62,
+                    "nationalite": "française",
+                    "libelle": "France"
+                }
+            },
+            "civilite": {
+                "id": 2,
+                "libelle": "M."
+            },
+            "nationalite": {
+                "id": 62,
+                "nationalite": "française",
+                "libelle": null
+            },
+            "isClient": true,
+            "isVIP": true,
+            "isVIPFiltre": null,
+            "nom": "ROBERT",
+            "prenom": "Albert",
+            "nomLocal": null,
+            "prenomLocal": null,
+            "fonction": null,
+            "proTelFixe": null,
+            "proTelPort": null,
+            "proCourriel": "albert.robert@msn.com",
+            "proFax": null,
+            "proAdrCP": "75000",
+            "proAdrRue": "28 avenue Général Buat",
+            "assistNom": null,
+            "assistPrenom": null,
+            "assistTel": null,
+            "assistCourriel": null,
+            "commentaire": null,
+            "organisme": "Organisme 3",
+            "dateCrea": 1004047200000,
+            "dateModif": 1017698400000,
+            "labelIsVIP": "oui"
+        },
+
+        {
+            "id": 35,
+            "ville": {
+                "id": 2664,
+                "libelle": "Paris",
+                "pays": {
+                    "id": 62,
+                    "nationalite": "française",
+                    "libelle": "France"
+                }
+            },
+            "civilite": {
+                "id": 2,
+                "libelle": "M."
+            },
+            "nationalite": {
+                "id": 62,
+                "nationalite": "française",
+                "libelle": null
+            },
+            "isClient": true,
+            "isVIP": false,
+            "isVIPFiltre": null,
+            "nom": "PAUL",
+            "prenom": "James",
+            "nomLocal": null,
+            "prenomLocal": null,
+            "fonction": null,
+            "proTelFixe": null,
+            "proTelPort": null,
+            "proCourriel": "james.paul@yahoo.fr",
+            "proFax": null,
+            "proAdrCP": "75000",
+            "proAdrRue": "44 avenue des Hortensias",
+            "assistNom": null,
+            "assistPrenom": null,
+            "assistTel": null,
+            "assistCourriel": null,
+            "commentaire": null,
+            "organisme": "Organisme 4",
+            "dateCrea": 1039302000000,
+            "dateModif": 1245880800000,
+            "labelIsVIP": "non"
+        },
+        {
+            "id": 77,
+            "ville": {
+                "id": 2664,
+                "libelle": "Paris",
+                "pays": {
+                    "id": 62,
+                    "nationalite": "française",
+                    "libelle": "France"
+                }
+            },
+            "civilite": {
+                "id": 2,
+                "libelle": "M."
+            },
+            "nationalite": {
+                "id": 62,
+                "nationalite": "française",
+                "libelle": null
+            },
+            "isClient": true,
+            "isVIP": true,
+            "isVIPFiltre": null,
+            "nom": "PASCAL",
+            "prenom": "Marc",
+            "nomLocal": null,
+            "prenomLocal": null,
+            "fonction": null,
+            "proTelFixe": null,
+            "proTelPort": null,
+            "proCourriel": "marc.pascal@gmail.com",
+            "proFax": null,
+            "proAdrCP": "75000",
+            "proAdrRue": "49 avenue du petit chemin",
+            "assistNom": null,
+            "assistPrenom": null,
+            "assistTel": null,
+            "assistCourriel": null,
+            "commentaire": null,
+            "organisme": "Organisme 4",
+            "dateCrea": 1424300400000,
+            "dateModif": 1424300400000,
+            "labelIsVIP": "oui"
+        }
+    ],
+    "pagination": {
+            "pageIndex": 1,
+            "itemsPerPage": 10
+        }
+    }
+}

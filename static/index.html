@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="fr">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Accueil</title>
+    <script type="text/javascript">
+        // Charge un fichier JSON de manière asynchrone et appelle la fonction de callback quand le chargement est terminé
+        function loadJsonAsynchronously(callback, file) {
+            var xobj = new XMLHttpRequest();
+            xobj.open('GET', file);
+            xobj.onreadystatechange = function () {
+                if (xobj.readyState == 4 && xobj.status == "200") {
+                    callback(xobj.responseText);
+                }
+            };
+            xobj.send(null);
+        }
+
+        // Ajoute dans le DOM la demande de chargement d'un fichier JS ou CSS
+        function loadFileInDom(filename, filetype, mountingPoint) {
+            if (filetype == "js") {
+                var fileref = document.createElement('script');
+                fileref.setAttribute("type", "text/javascript");
+                fileref.setAttribute("src", filename);
+            }
+            else if (filetype == "css") {
+                var fileref = document.createElement("link");
+                fileref.setAttribute("rel", "stylesheet");
+                fileref.setAttribute("type", "text/css");
+                fileref.setAttribute("href", filename);
+            } else if (filetype == "icon") {
+                var fileref = document.createElement("link");
+                fileref.setAttribute("rel", "icon");
+                fileref.setAttribute("type", "image/png");
+                fileref.setAttribute("href", filename);
+            }
+            if (typeof fileref != "undefined") {
+                mountingPoint = mountingPoint || "head";
+                document.getElementsByTagName(mountingPoint)[0].appendChild(fileref);
+            }
+        }
+
+    </script>
+    <script type="text/javascript">
+
+        (function (root) {
+            var messages = undefined;
+            var menuItems = undefined;
+            var config = undefined;
+
+            loadJsonAsynchronously(function (response) {
+                messages = JSON.parse(response);
+                buildConfigurationAndLoadScript();
+            }, '/applitutoriel-spa/static/messages.json');
+
+            loadJsonAsynchronously(function (response) {
+                menuItems = JSON.parse(response);
+                buildConfigurationAndLoadScript();
+            }, '/applitutoriel-spa/static/navigation.json');
+
+            loadJsonAsynchronously(function (response) {
+                config = JSON.parse(response);
+                buildConfigurationAndLoadScript();
+            }, '/applitutoriel-spa/static/config-spa.json');
+
+            function buildConfigurationAndLoadScript() {
+                if (!messages || !menuItems || !config) {
+                    console.log('Chargement non terminé, attente de la prochaine exécution de cette fonction');
+                    return;
+                }
+                // Tout est correctement chargé, on peut y aller
+                console.log('Chargement de la configuration terminée, chargement de la page');
+
+                // On insère le contenu du tableau
+                config.dispatcher.stores.NavigationBaseStore.menuItems = menuItems.menu;
+
+                // On insère la conf de l'application
+                root.App = {
+                    "dispatcher": config.dispatcher,
+                    "plugins": {
+                        "InternationalisationPlugin": {
+                            "i18nMessages": messages,
+                            "locale": config.locale
+                        }
+                    }
+                };
+                root.Config = {
+                    "commons": config.commons,
+                    "client": config.client
+                };
+
+                var themeCss = config.dispatcher.stores.PageInformationStore.themeCss;
+                var themeUrl = themeCss.cdn + "/" + themeCss.version + "/" + themeCss.name;
+
+                loadFileInDom(themeUrl + "/img/logo.png", "icon");
+                loadFileInDom(themeUrl + "/css/theme.css", "css");
+                loadFileInDom("/applitutoriel-spa/static/js/client.js", "js", "body");
+            }
+
+        }(this));
+    </script>
+</head>
+
+<body>
+<div id="app"></div>
+</body>
+
+</html>

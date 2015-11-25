@@ -1,0 +1,9 @@
+{"repartition":
+    [
+        {"label": "Agro-alimentaire","value": "16","color": "#3366CC"},
+        {"label": "Electro-ménager","value": "16","color": "#DC3912"},
+        {"label": "Habillement","value": "29","color": "#FF9900"},
+        {"label": "Santé","value": "16","color": "#109618"},
+        {"label": "Sport","value": "20","color": "#990099"}
+    ]
+}

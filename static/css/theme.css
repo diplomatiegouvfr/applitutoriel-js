@@ -1,0 +1,5 @@
+.content-modal-body {
+    overflow: auto;
+    max-height: 700px;
+    padding: .5em 5em 1em 5em;
+}

@@ -1,0 +1,137 @@
+{
+  "menu": [
+    {
+      "text": "navigation.welcome",
+      "url": "/accueil",
+      "visibleDansMenu": true,
+      "visibleDansPlan": true
+    },
+    {
+      "text": "navigation.partenaire.gestionDesPartenaires",
+      "visibleDansMenu": true,
+      "rolesAutorises": [
+        "AppliTuto_USER",
+        "AppliTuto_ADMIN"
+      ],
+      "submenu": [
+        {
+          "text": "navigation.partenaire.listeViaRecherche",
+          "title": "navigation.partenaire.listeViaRecherche",
+          "url": "/partenaires",
+          "visibleDansMenu": true,
+          "visibleDansPlan": true,
+          "rolesAutorises": [
+            "AppliTuto_USER",
+            "AppliTuto_ADMIN"
+          ],
+          "submenu": [
+            {
+              "text": "navigation.partenaire.fichePartenaire",
+              "url": "/partenaires/consulter",
+              "visibleDansMenu": false,
+              "visibleDansPlan": false,
+              "rolesAutorises": [
+                "AppliTuto_USER",
+                "AppliTuto_ADMIN"
+              ]
+            },
+            {
+              "text": "navigation.partenaire.editionPartenaire",
+              "url": "/partenaires/editer",
+              "visibleDansMenu": false,
+              "visibleDansPlan": false,
+              "rolesAutorises": [
+                "AppliTuto_USER",
+                "AppliTuto_ADMIN"
+              ]
+            },
+            {
+              "text": "navigation.partenaire.creationPartenaire",
+              "url": "/partenaires/creer",
+              "visibleDansMenu": false,
+              "visibleDansPlan": false,
+              "rolesAutorises": [
+                "AppliTuto_USER",
+                "AppliTuto_ADMIN"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "navigation.administration.label",
+      "visibleDansMenu": true,
+      "rolesAutorises": "AppliTuto_ADMIN",
+      "submenu": [
+        {
+          "text": "navigation.administration.secteurs",
+          "visibleDansMenu": true,
+          "visibleDansPlan": true,
+          "submenu": [
+            {
+              "text": "navigation.administration.listeSecteurs",
+              "title": "navigation.administration.listeSecteursTitle",
+              "url": "/secteurs",
+              "visibleDansMenu": true,
+              "visibleDansPlan": true
+            },
+            {
+              "text": "navigation.administration.repartition",
+              "url": "/repartition",
+              "visibleDansMenu": true,
+              "visibleDansPlan": true
+            }
+
+          ]
+        }
+      ]
+    },
+    {
+      "text": "navigation.accessibility",
+      "url": "/politiqueAccessibilite",
+      "visibleDansPlan": true,
+      "visibleDansMenu": false
+    },
+    {
+      "text": "navigation.contact",
+      "url": "/contact",
+      "visibleDansMenu": false,
+      "visibleDansPlan": true,
+      "rolesAutorises": [
+        "AppliTuto_USER",
+        "AppliTuto_ADMIN"
+      ]
+    },
+    {
+      "text": "navigation.help",
+      "url": "/aide",
+      "visibleDansMenu": false,
+      "visibleDansPlan": true,
+      "rolesAutorises": [
+        "AppliTuto_USER",
+        "AppliTuto_ADMIN"
+      ]
+    },
+    {
+      "text": "navigation.plan",
+      "url": "/planAppli",
+      "visibleDansMenu": false,
+      "visibleDansPlan": false,
+      "rolesAutorises": [
+        "AppliTuto_USER",
+        "AppliTuto_ADMIN"
+      ]
+    },
+    {
+      "text": "navigation.declarationconformity",
+      "url": "/declarationConformite",
+      "visibleDansMenu": false,
+      "visibleDansPlan": false,
+      "rolesAutorises": [
+        "AppliTuto_USER",
+        "AppliTuto_ADMIN"
+      ]
+    }
+  ]
+}

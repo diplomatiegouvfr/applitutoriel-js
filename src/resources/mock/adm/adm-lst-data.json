@@ -1,0 +1,9 @@
+{"secteurs":
+[
+    {"id":1,"dateCreat":1331809200000,"auteurCreat":"user","dateMajEnreg":1331809200000,"auteurMajEnreg":"user","dateSupprEnreg":null,"auteurSupprEnreg":null,"nom":"Agro-alimentaire","desc":"Secteur de l'agro-alimentaire"},
+    {"id":3,"dateCreat":1331809200000,"auteurCreat":"user","dateMajEnreg":1331895600000,"auteurMajEnreg":"user","dateSupprEnreg":null,"auteurSupprEnreg":null,"nom":"Electro-ménager","desc":"Secteur de l'électro-ménager"},
+    {"id":2,"dateCreat":1331809200000,"auteurCreat":"user","dateMajEnreg":1331895600000,"auteurMajEnreg":"user","dateSupprEnreg":null,"auteurSupprEnreg":null,"nom":"Habillement","desc":"Secteur de l'habillement"},
+    {"id":4,"dateCreat":1331809200000,"auteurCreat":"user","dateMajEnreg":1331895600000,"auteurMajEnreg":"user","dateSupprEnreg":null,"auteurSupprEnreg":null,"nom":"Santé","desc":"Secteur de la santé"},
+    {"id":5,"dateCreat":1331550000000,"auteurCreat":"user","dateMajEnreg":1331636400000,"auteurMajEnreg":"user","dateSupprEnreg":null,"auteurSupprEnreg":null,"nom":"Sport","desc":"Secteur du sport"}
+]
+}

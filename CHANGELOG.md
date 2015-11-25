@@ -1,0 +1,216 @@
+# Applitutoriel-js 5.0.0-rc4
+- 53188 - Ecran recherche partenaire : réinitialisation des champs dates
+- 53381 - Normalisation des imports
+- 53296 - Redirection après perte de session
+- 53265 - Menu : remarques autour de la navigation clavier
+- 53325 - Ecran recherche partenaire : pas de cadre d'erreur ou de validation
+- 53406 - Role : Variabiliser les rôles
+- 53133 - Ecran recherche partenaire : taille max d'upload
+- 53407 - Ecran de contact : pas de contrôle sur les rôles
+- 53410 - Classe morte : Filters
+- 52710 - RGAAV3 : partenaire + secteur
+- 53351 - Ecran fiche partenaire : I18N sur la satisfaction client et upload de fichier
+- 53285 - Ecran création partenaire : liste ville déjà alimenté par le pays afghanistan
+- 53307 - Ecran modification d'un secteur : titre message d'erreur incorrecte
+- 53245 - Impossible d'afficher le sous menu
+
+# Applitutoriel-js 5.0.0-rc3
+- 53130 - Origin is not allowed by Access-Control-Allow-Origin
+- 53290 - Ecran de recherche partenaire : suppression en masse inutile lorsqu'il n'y a aucune selection
+- 53289 - Ecran saisie partenaire : saisir de plus de 255 caractères sur le champ divers
+- 53286 - Ecran consultation partenaire : bouton annulé souligné
+- 53284 - Ecran recherche partenaire : Suppression d'un partenaire VIP possible
+- 53266 - Recherche de partenaire : datepicker & aria-hidden
+- 53269 - Titre de l'application dans l'entête navigateur
+- 53280 - Regression de version de dépendances et nouvelles dépendancs
+- 53267 - reorganisation des resources json
+- 53268 - Version de l'application
+- 53295 - Barre d'accessibilité : fixe sur le thème intranet
+- 53283 - Ecran recherche partenaire : Vip doit être en majuscule
+- 53353 - Ecran recherche partenaire : I18N liste des secteurs
+- 53354 - Ecran liste des secteurs : Modale avec style en dur
+- 53355 - Classe newforms en typescript
+- 53389 - Utilisation de use strict
+- 53185 - Authentification : mode bouchon
+- 53328 - Ecran Plan de l'application  : accessibilité et pertinence des attributs title
+- 53306 - Ecran modification d'un partenaire : titre message d'erreur incorrecte
+- 53293 - Ecran liste des secteurs : Fil d'ariane incorrecte
+- 53299 - Ecran liste des secteurs : Bouton vailder reste blanc
+- 53303 - Ecran liste des secteurs : Style des liens du cadre d'erreur
+- 53302 - Ecran liste des secteurs : Modification d'un secteur, pas de champ d'erreur
+- 53305 - Ecran liste des secteurs : popup de notification après modification d'un secteur
+- 53294 - Ecran liste des secteurs : Pied du tableau avec icone d'ajout
+- 53301 - Ecran recherche partenaire : pb du page sur filtre tableau
+- 53310 - Ecran recherche partenaire : pb de controle du page sur filtre tableau
+- 53288 - Ecran recherche partenaire : Erreur sur le compo page du tableau
+- 53300 - Ecran recherche partenaire : Réinitilisation des champs dates
+- 53304 - Ecran saisie partenaire : Erreur de validation de champ ville
+- 52098 - Ecran recherche partenaire : remarques
+- 53297 - Ecran secteur répartition  : pas d'accessibilité
+- 53291 - Ecran recherche partenaire : Erreur de tri sur la colonne VIP
+
+# Applitutoriel-js 5.0.0-rc2
+- 53231 - Problème fluxible sur le getStore
+- 53206 - Ecran liste des secteurs : caption du tableau sous chrome
+- 53207 - Ecran liste des secteurs : panel erreur dans les modales
+- 53203 - Ecran consultation partenaire : navigation clavier impossible
+- 53212 - Icone de recherche tableau
+- 53213 - Composant tableau : flip sur le changement de page de la pagination
+- 53144 - Redirection après reconnexion
+- 53147 - Ecran recherche partenaire : Problème sur l'indicateur de pagination après retour de consultation
+- 53211 - Composant date : icone décallé vers le bas 1px
+- 53215 - Titre de l'application
+- 53131 - Fiche partenaire : Upload d'une image autre qu'une image
+- 53187 - Ecran recherche partenaire : export pdf
+- 53199 - Ecran edition partenaire : caractère spécial "‘" dans le champ numéro de tel
+- 53196 - Ecran recherche partenaire : Avertissement avant suppression en masse
+- 53190 - Ecran recherche partenaire : caractère "‘" dans les filtres du tableau
+- 53201 - Ecran consultation partenaire : champ rue trop petit
+- 53200 - Ecran consultation partenaire : champ Courriel pro est petit
+- 53149 - Ecran création partenaire : champ pays Afghanistan
+- 53205 - Ecran liste des secteurs : libellé description de la modale
+- 53202 - Ecran consultation partenaire : fil d'ariane non traduit
+- 53148 - Ecran Consultation partenaire : Problème de fil d'ariane
+- 53204 - Ecran liste des secteurs : user de création
+
+# Applitutoriel-js 5.0.0-rc1
+
+- 51715  -  EXP_INF_IAT  -  En tant que Exploitant je peux installer l'applitutoriel
+- 51716  -  INT_PIC_CAT  -  En tant que Intégrateur je peux construire l'applitutoriel
+- 51717  -  DEV_ENV_LDA  -  En tant que Developpeur je peux lancer / debugger l'applitutoriel
+- 51718  -  DEV_ENV_TAT  -  En tant que Developpeur je peux tester (unitaire) l'applitutoriel
+- 51719  -  INT_PIC_CFM  -  En tant que Intégrateur je peux construire le framework
+- 51720  -  DEV_ENV_TDF  -  En tant que Developpeur je peux tester / debuger le framework
+- 51721  -  DEV_ENV_IEW  -  En tant que Developpeur je peux installer mon environnement JS
+- 51722  -  DEV_ENV_IEE  -  En tant que Developpeur je peux installer mon environnement Java
+- 51723  -  DEV_ENV_MCF  -  En tant que Developpeur je peux mesurer la couverture de test du framwork
+- 51724  -  INT_PIC_MFC  -  En tant que Intégrateur je peux mesurer la couverture de test du framwork
+- 51725  -  EXP_INF_PFM  -  En tant que Exploitant je peux publier / installer le Framework
+- 51726  -  EXP_INF_PTH  -  En tant que Exploitant je peux publier / installer les Themes
+- 51727  -  INT_PIC_CTH  -  En tant que Intégrateur je peux construire les Themes
+- 51728  -  DEV_ENV_MCA  -  En tant que Developpeur je peux mesurer la couverture de test de l'applituto
+- 51729  -  INT_PIC_MCA  -  En tant que Intégrateur je peux mesurer la couverture de test de l'applituto
+- 51730  -  UTI_APT_VAD  -  En tant que Utilisateur je peux visualiser l'applitutoriel sur le thème diplonet avec son entete
+- 51731  -  UTI_APT_ACC  -  En tant que Utilisateur je peux visualiser la page d'accueil
+- 51732  -  UTI_APT_AID  -  En tant que Utilisateur je peux En tant qu'utilisateur je visualise la page d'aide
+- 51733  -  UTI_APT_NPA  -  En tant que Utilisateur je peux naviguer dans l'applitutoriel via un plan d'application
+- 51734  -  UTI_APT_NFA  -  En tant que Utilisateur je peux naviguer dans l'applitutoriel via un fil d'ariane
+- 51735  -  UTI_APT_PAC  -  En tant que Utilisateur je peux visualiser la politique d'accessibilité
+- 51736  -  UTI_APT_EMC  -  En tant que Utilisateur je peux envoyer un mail de contact
+- 51737  -  UTI_APT_VLP  -  En tant que Utilisateur je peux visualiser une liste de partenaire
+- 51738  -  UTI_APT_ERL  -  En tant que Utilisateur je peux effectuer une recherche sur la liste des partenaires
+- 51739  -  UTI_APT_TRT  -  En tant que Utilisateur je peux trier le résultats du tableau
+- 51740  -  UTI_APT_APT  -  En tant que Utilisateur je peux ajouter un partenaire via le tableau
+- 51741  -  UTI_APT_VPT  -  En tant que Utilisateur je peux visualiser un partenaire via le tableau
+- 51742  -  UTI_APT_NPT  -  En tant que Utilisateur je peux naviguer de page en page pour visualiser les partenaires
+- 51743  -  UTI_APT_SPP  -  En tant que Utilisateur je peux supprimer un ou plusieurs partenaires
+- 51744  -  UTI_APT_FPT  -  En tant que Utilisateur je peux filtrer les partenaires remontés par la recherche
+- 51745  -  UTI_APT_VER  -  En tant que Utilisateur je peux visualiser mes erreurs de saisies sur les champs de recherche
+- 51746  -  UTI_APT_VEF  -  En tant que Utilisateur je peux visualiser mes erreurs de saisies sur le filtre du tableau
+- 51747  -  UTI_APT_VEE  -  En tant que Utilisateur je peux visualiser mes erreurs de saisies sur la fiche d'édition des partenaires
+- 51748  -  UTI_APT_ONG  -  En tant que Utilisateur je peux passer d'un onglet à l'autre sur la page des partenaire
+- 51749  -  UTI_APT_SEC  -  En tant que Utilisateur je peux visualiser la liste des secteurs sous forme de tableau
+- 51750  -  UTI_APT_ASE  -  En tant que Utilisateur je peux ajouter un secteur
+- 51752  -  UTI_APT_ESE  -  En tant que Utilisateur je peux editer un secteur
+- 51755  -  INT_PIC_CDO  -  En tant que Intégrateur je peux construire la documentation
+- 51760  -  INT_APT_PER  -  En tant que Intégrateur je peux valider les performance de l'applituto
+- 51761  -  DEV_PIC_EXP  -  En tant que Developpeur je peux exporter mes objets Java sous un format TypeScript
+- 51762  -  EXP_INF_IAS  -  En tant que Exploitant je peux installer l'applitutoriel (service)
+- 51763  -  INT_PIC_CAS  -  En tant que Intégrateur je peux construire l'applitutoriel (service)
+- 51764  -  DEV_ENV_LAS  -  En tant que Developpeur je peux lancer / debugger l'applitutoriel  (service)
+- 51765  -  DEV_ENV_TAS  -  En tant que Developpeur je peux tester (unitaire) l'applitutoriel  (service)
+- 51766  -  INT_PIC_CFS  -  En tant que Intégrateur je peux construire le framework  (service)
+- 51767  -  DEV_ENV_TFS  -  En tant que Developpeur je peux tester / debuger le framework (service)
+- 51769  -  EXP_INF_PFS  -  En tant que Exploitant je peux publier le Framework  (service)
+- 51770  -  DEV_ENV_MAS  -  En tant que Developpeur je peux mesurer la couverture de test de l'applituto  (service)
+- 51772  -  DEV_SER_MVN  -  En tant que Developpeur je peux utiliser Maven pour développer l'applitutoriel services
+- 51773  -  DEV_SER_SP4  -  En tant que Developpeur je peux utiliser Spring 4 pour développer l'applitutoriel services
+- 51774  -  DEV_SER_LBK  -  En tant que Developpeur je peux utiliser Logback pour développer l'applitutoriel services
+- 51775  -  DEV_SER_SMV  -  En tant que Developpeur je peux utiliser Spring MVC pour développer l'applitutoriel services
+- 51777  -  DEV_SER_MB3  -  En tant que Developpeur je peux utiliser MyBatis 3 pour développer l'applitutoriel services
+- 51778  -  INT_APT_MVN  -  En tant que IntégrateuirJe peux construire l'application Tuto services avec Maven
+- 51779  -  EXP_APT_CONF  -  Je peux configurer l'appli tuto via un ou plusieurs fichier de conf externes à l'appliAfin 
+- 51780  -  DEV_ENV_LINK  -  En tant que DéveloppeurJe peux gérer les dépendances entre modules Afin de travailler efficacement 
+- 51781  -  DEV_CLI_DBL  -  En tant que développeur Je peux rendre isomorphe les contôles de validation et de saisie
+- 51782  -  DEV_ENV_LPD  -  En tant que Développeur Je peux gérer les PeerDependencies entre modules Afin de travailler efficacement
+- 51785  -  EXP_DOC_SAT  -  En tant que Exploitant je peux Installer l'application Tutoriel
+- 51786  -  EXP_DOC_STH  -  En tant que Exploitant je peux Installer le CDN (Thème)
+- 51787  -  DEV_DOC_SER  -  En tant que Developpeur je peux connaitre les utilisation des composant services
+- 51788  -  DEV_DOC_NJS  -  En tant que Developpeur je peux connaitre les utilisation des composant js
+- 51789  -  DEV_DOC_ARC  -  En tant que Developpeur je peux connaitre La structure générale de l'application
+- 51790  -  DEV_APT_BOU  -  En tant que Developpeur je peux Lancer l'application tutoriel sans services
+- 51791  -  DEV_APT_HAN  -  En tant que Developpeur je peux utiliser React pour le template de page
+- 51792  -  DEV_DEV_DTS  -  En tant que Developpeur je peux mettre des point d'arret dans les TS 
+- 51793  -  DEV_DEV_SCO  -  En tant que Developpeur je peux Lancer les application sans ligne de commande
+- 51794  -  DEV_TEM_TJS  -  En tant que Developpeur je peux Constuire une application Node JS basée sur yeoman (thème Intranet)
+- 51795  -  DEV_TEM_TJA  -  En tant que Developpeur je peux Constuire une application Service basée sur Maven (Archetype)
+- 51796  -  UTI_APT_ECS  -  En tant que Utilisateur je peux Exporter les données du tableau partenaire au format CSV
+- 51797  -  UTI_APT_EXL  -  En tant que Utilisateur je peux Exporter les données du tableau partenaire au format EXL
+- 51798  -  UTI_APT_EPD  -  En tant que Utilisateur je peux Exporter les données du tableau partenaire au format PDF
+- 51799  -  DEV_APT_TAR  -  je peux acceder aux composant sans connaitre l'arboressence des composants
+- 51800  -  DEV_APT_ORG  -  je peux retrouver mes fichier en fonction du patterne Flux  et non de leur technologie
+- 51801  -  DEV_APT_COD  -  retrouver les Codification des spécifications dans l'organisation des sources
+- 51802  -  UTI_APT_I18  -  En tant que Utilisateur je peux visualiser l'application dans ma langue.
+- 51803  -  DEV_APT_SRM  -  En tant que Developpeur je peux séparer les routes par modules fonctionnel
+- 51804  -  UTI_APT_ERT  -  En tant que Utilisateur je peux savoir lorsqu'un traitement n'a pas abouti (erreur technique)
+- 51805  -  DEV_APT_FLU  -  En tant que Developpeur je peux Utiliser les contextes Fluxible
+- 51806  -  DEV_DEV_FTS  -  En tant que Developpeur je peux importer une seul définition de donn?es
+- 51807  -  DEV_APT_FIL  -  En tant que Developpeur je peux Poser run filtre sur une famille d'URL
+- 51808  -  DEV_APT_AGE  -  En tant que Developpeur je peux Utiliser des actions de base pour développer mes Action
+- 51809  -  DEV_APT_STS  -  En tant que Developpeur je peux Implémenter mes Store sen TS avec Héritage
+- 51810  -  DEV_APT_CRM  -  En tant que Developpeur je peux séparer les routes par modules fonctionnel
+- 51811  -  DEV_CLI_FLU  -  En tant que Developpeur je peux Utiliser fluxible pour réaliser mes développpement
+- 51812  -  DEV_DEV_DTW  -  En tant que Developpeur je peux Debugger en typescript dans l'environnement webstorm
+- 51813  -  DEV_CLI_SRM  -  En tant que Developpeur je peux charger les routes par modules fonctionnel
+- 52892  -  UTI_APT_PCA  -  En tant que Utilisateur je peux ajouer / modifier un partenaire avec des composants avancés
+- 52894  -  UTI_APT_GRA  -  En tant que Utilisateur je peux Visualiser la répartition par secteur
+- 52896  -  UTI_APT_AUT  -  En tant que Utilisateur je peux m'identifier
+- 52897  -  UTI_APT_HAB  -  En tant que Utilisateur je peux accéder uniquement aux parges autorisées
+- 52898  -  UTI_APT_CTH  -  En tant que Utilisateur je peux changer de théme
+- 52899  -  UTI_APT_TAB  -  En tant que Utilisateur je peux naviguer avec une tablette
+- 52902  -  UTI_APT_SMX  -  En tant que Utilisateur je peux basculer en mode spa / mpa / mixte
+- 52903  -  UTI_APT_SSB  -  En tant que Utilisateur je peux ne plus avoir de backend
+- 52905  -  DEV_CLI_MRE  -  En tant que Developpeur je peux Utiliser la derniére versino de React
+- 52906  -  DEV_APT_AND  -  En tant que Developpeur je peux utiliser des classes en environnement case sensitive
+- 52907  -  EXP_DOC_ISI  -  En tant que Exploitant je peux installer une infra simple
+- 52908  -  UTI_APT_MIF  -  En tant que Utilisateur je peux visualiser les message d'information
+- 52909  -  UTI_APT_CTH_1  -  En tant que Utilisateur je peux changer de théme
+- 52910  -  UTI_APT_MOB_1  -  En tant que Utilisateur je peux naviguer avec un mobile
+- 52911  -  DEV_TEM_TTH  -  En tant que Developpeur je peux générer un projet sur un théme
+- 52912  -  UTI_APT_FUP  -  En tant que Utilisateur je peux uploader un fichier sur la fiche partenaire (photo)
+- 52916  -  EXP_INF_SCE  -  En tant que Exploitant je peux Séparer les confs d'exploitation des confs d'appli
+- 52918  -  DEV_CLI_R13  -  En tant que Developpeur je peux Utiliser React 0.13
+- 52919  -  UTI_APT_CLL  -  En tant que Utilisateur je peux ajouer / modifier un partenaire avec des composants avancés
+- 52920  -  UTI_APT_CSM  -  En tant que Utilisateur je peux ajouer / modifier un partenaire avec des composants avancés
+- 52921  -  DEV_CLI_ACD  -  En tant que développeur Je peux enchainer les actions en passant le contexte "chaindata"
+- 52922  -  INT_CLI_SCH  -  En tant que intégrateur Je peux reconstruire l'application é l'identique dans plusieurs mois.
+- 52923  -  UTI_CLI_NOT  -  En tant que Utilisateur je peux afficher le composant Notification de maniére isomorphe
+- 52924  -  UTI_CLI_CAL  -  En tant que Utilisateur je peux afficher le composant Calendrier n de maniére isomorphe
+- 52925  -  UTI_CLI_AUC  -  En tant que Utilisateur je peux afficher le composant AutoComplete de maniére isomorphe
+- 52926  -  UTI_CLI_ONG  -  En tant que Utilisateur je peux afficher le composant Onglets de maniére isomorphe
+- 52927  -  DEV_CLI_RTE  -  En tant que Developpeur je peux Migration du routeur pour fonctionnement avec js
+- 52928  -  DEV_CLI_ACT  -  En tant que Developpeur je peux Migration du routeur et des actions pour fonctionnement avec js
+- 52929  -  DEV_CLI_TAB  -  En tant que Developpeur je peux Afficher le tableau en isomorphe
+- 52930  -  DEV_DEV_W10  -  En tant que Developpeur je peux utiliser le deboggeur webstorm 10 (nécéssite Nodejs 0.12)
+- 52931  -  INT_MSC_N12  -  En tant que Intégrateur je peux construire et installer le projet sur node 0.12
+- 52932  -  DEV_CLI_ESC  -  En tant que Developpeur je peux désactiver les protections anti injection SQL (escape)
+- 52933  -  DEV_CLI_CSR  -  En tant que Developpeur je peux effectuer une validation d'autenticité de mon formulaire via csrf
+- 52934  -  EXP_CLI_PCP  -  En tant que Exploitant je peux paramétrer le contextPath
+- 52935  -  DEV_CLI_UUS  -  En tant que Developpeur je peux utiliser de faéon systématique use strict dans mes TS.
+- 52936  -  DEV_APT_HEL  -  En tant que Developpeur je peux paramétrer les configurations de sécurité de Helmet
+- 52937  -  DEV_CLI_HPP  -  En tant que Developpeur je peux  assurer l'absence de doublons dans les paramétres get
+- 52938  -  DEV_CLI_SHO  -  En tant que Developpeur je peux configurer les sessions de express (httponly, secure)
+- 52939  -  DEV_APT_BOM  -  En tant que Developpeur je peux importer les dépendances par familles (Plans de conf / BOM)
+- 52940  -  DEV_CLI_LIC  -  En tant que Developpeur je peux avoir les licences et les changelog des modules
+- 52941  -  DEV_APT_SPI  -  En tant que Developpeur je peux savoir lorsqu'un traitement est en cours (spiner)
+- 52947  -  DEV_DOC_GDF  -  En tant que Developpeur je peux connaitre les bonnes pratiques pour le framework
+- 52950  -  DEV_APT_CJS  -  En tant que Developpeur je peux utiliser un systéme de cache en JS
+- 52953  -  DEV_SER_LIC  -  En tant que Developpeur je peux avoir les licences et les changelog des modules
+- 52954  -  UTI_APT_NMO  -  En tant que Utilisateur je peux utiliser l'application dans plusieurs onglets
+- 52956  -  UTI_APT_SPI  -  En tant que Utilisateur je peux savoir si un traitement est en cours
+- 52957  -  DEV_APT_UCP  -  En tant que Developpeur je peux Utiliser un context path
+
+
+
+
+

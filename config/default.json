@@ -1,0 +1,159 @@
+{
+  "contextPath": "applitutoriel-5.0.0",
+  "welcomePage": "/accueil",
+  "server": {
+    "route": "js1",
+    "port": 8888,
+    "keepAlive": true,
+    "maxConnections": 100,
+    "timeout": 300000,
+    "uploadFileSize": 1000000,
+    "sessionTimeout": 1800000
+  },
+  "cookie": {
+    //"domain": null,
+    //"path": null,
+    "httpOnly": true,
+    "secure": false
+    //"alwaysSetCookie": false
+  },
+  "themeHost": "http://localhost:7777",
+  "themeUrl": "${themeHost}/5.0.0/default",
+  "security": {
+    "enabled": true,
+    "hpp": true,
+    "ienoopen": true,
+    "noSniff": true,
+    "csp": {
+      "enabled": true,
+      "defaultSrc": [
+        "'self'",
+        "'unsafe-inline'",
+        "'unsafe-eval'",
+        "${themeHost}"
+      ],
+      "scriptSrc": [
+        "'self'",
+        "'unsafe-inline'",
+        "'unsafe-eval'",
+        "${themeHost}"
+      ],
+      "styleSrc":[
+        "'self'",
+        "'unsafe-inline'",
+        "${themeHost}"
+      ],
+      "fontSrc":[
+        "'self'",
+        "${themeHost}"
+      ],
+      "imgSrc":[
+        "'self'",
+        "${themeHost}"
+      ],
+      "reportOnly": false,
+      "setAllHeaders": false,
+      "disableAndroid": false,
+      "safari5": false
+    },
+    "frameguard": {
+      "enabled": true,
+      "mode": "deny",
+      "allowFromPattern": ""
+    },
+    "xss": {
+      "enabled": true,
+      "setOnOldIE": true
+    },
+    "hpkp": {
+      "enabled": true,
+      "maxAge": 7776000000,
+      "sha256s": [
+        "AbCdEf123=",
+        "ZyXwVu456="
+      ],
+      "includeSubdomains": true,
+      "reportUri": null
+    },
+    "hsts": {
+      "enabled": false,
+      "maxAge": 10886400000,
+      "includeSubdomains": true,
+      "preload": false
+    },
+    "csrf": {
+      "enabled": true,
+      "maxTokensPerSession": 10
+    }
+  },
+  "log": {
+    "levels": {
+      "[all]": "DEBUG",
+      "hornet-js-components.table": "TRACE"
+    },
+    "appenders": [
+      {
+        "type": "console",
+        "layout": {
+          "type": "pattern",
+          "pattern": "%[%d{ISO8601}|%x{tid}|%x{user}|%p|%c|%x{fn}|%m%]"
+        }
+      }
+      //        {
+      //          "type": "dateFile",
+      //          "filename": "log/app.log",
+      //          "layout": {
+      //            "type": "pattern",
+      //            "pattern": "%d{ISO8601}|%x{tid}|%x{user}|%p|%c|%x{fn}|%m"
+      //          }
+      //        }
+    ]
+  },
+  "logClient": {
+    "remote": false,
+    "level": "TRACE",
+    "appenders": [
+      {
+        "type": "BrowserConsole",
+//        "layout": {
+//          "type": "pattern",
+//          "pattern": "%p|%c|%m%"
+//        }
+        "layout": {
+          "type": "THIN"
+        }
+      },
+      {
+        "type": "Ajax",
+        "layout": {
+          "type": "BASIC"
+        },
+        "threshold": 100,
+        "timeout": 3000,
+        "url": "/log"
+      }
+    ]
+  },
+  "services": {
+    "host": "http://localhost:8080/",
+    "name": "applitutoriel-service"
+  },
+  "mock": {
+    "enabled": true,
+    "host": "127.0.0.1", //default localhost
+    "routes": "/mock/routes"
+  },
+  "fullSpa": {
+    "enabled": false,
+    "host": "",
+    "name": "/services"
+  },
+  "authentication": {
+    "loginUrl": "/login",
+    "logoutUrl": "/logout"
+  },
+  "cache": {
+    "enabled": true,
+    "timetolive": 60
+  }
+}
