@@ -1,4 +1,3 @@
-///<reference path="../../../node_modules/app/hornet-js-ts-typings/definition.d.ts"/>
 "use strict";
 import utils = require("hornet-js-utils");
 import Action = require("hornet-js-core/src/actions/action");
@@ -7,12 +6,9 @@ import FichePartenaireApi = require("src/services/par/par-fpa-api");
 import VilleApi = require("src/services/par/par-ville-api");
 import PaysApi = require("src/services/par/par-pays-api");
 import PartenairesActionsChainData = require("src/routes/par/partenaires-actions-chain-data");
-import MediaType = require("hornet-js-core/src/protocol/media-type");
-import SecteurStore = require("src/stores/adm/adm-lst-store");
 import FichePartenaireStore = require("src/stores/par/par-fpa-store");
 import PageInformationStore = require("hornet-js-core/src/stores/page-informations-store");
 import FichePartenaireForm = require("src/views/par/par-fpa-form");
-import authUtils = require("hornet-js-utils/src/authentication-utils");
 import N = require("hornet-js-core/src/routes/notifications");
 
 var WError = utils.werror;
@@ -21,7 +17,7 @@ var villeApi:VilleApi = new VilleApi();
 var paysApi:PaysApi = new PaysApi();
 
 export class InitPartenaire extends Action<PartenairesActionsChainData> {
-    execute(resolve, reject) {
+    execute(resolve:(data?:ActionsChainData)=>void, reject:(error:any)=>void) {
         logger.info("ACTION InitPartenaire - Dispatch REMOVE_PARTENAIRE_FORM_DATA");
         this.actionContext.dispatch("REMOVE_PARTENAIRE_FORM_DATA");
         resolve();
@@ -29,7 +25,7 @@ export class InitPartenaire extends Action<PartenairesActionsChainData> {
 }
 
 export class ListerPays extends Action<PartenairesActionsChainData> {
-    execute(resolve, reject) {
+    execute(resolve:(data?:ActionsChainData)=>void, reject:(error:any)=>void) {
 
         var self = this;
 
@@ -44,7 +40,7 @@ export class ListerPays extends Action<PartenairesActionsChainData> {
 }
 
 export class ListerVilles extends Action<PartenairesActionsChainData> {
-    execute(resolve, reject) {
+    execute(resolve:(data?:ActionsChainData)=>void, reject:(error:any)=>void) {
         logger.info("Action: ListerAllVilles, appel api villes");
         var self = this;
 
@@ -59,7 +55,7 @@ export class ListerVilles extends Action<PartenairesActionsChainData> {
 }
 
 export class ListerVillesParPays extends Action<PartenairesActionsChainData> {
-    execute(resolve, reject) {
+    execute(resolve:(data?:ActionsChainData)=>void, reject:(error:any)=>void) {
         logger.info("Action: ListerAllVilles, appel api villes");
         var self = this;
 
@@ -74,9 +70,9 @@ export class ListerVillesParPays extends Action<PartenairesActionsChainData> {
 }
 
 export class ListerNationalites extends Action<PartenairesActionsChainData> {
-    execute(resolve, reject) {
+    execute(resolve:(data?:ActionsChainData)=>void, reject:(error:any)=>void) {
         var self = this;
-        // Soit c"est fourni dans le POST soit c"est fourni par une action précédente
+        // Soit c'est fourni dans le POST soit c"est fourni par une action précédente
         var nationaliteToCheck = (this.payload && this.payload.value) || this.actionChainData.partenaireNationalite$text;
 
         paysApi.rechercherNationalites(nationaliteToCheck).then((retourApi:ActionsChainData)=> {
@@ -94,7 +90,7 @@ export class ListerNationalites extends Action<PartenairesActionsChainData> {
 }
 
 export class LirePhoto extends Action<PartenairesActionsChainData> {
-    execute(resolve, reject) {
+    execute(resolve:(data?:ActionsChainData)=>void, reject:(error:any)=>void) {
 
         var idPhoto = null;
         if (this.payload && this.payload.idPhoto) {
@@ -121,21 +117,21 @@ export class LirePhoto extends Action<PartenairesActionsChainData> {
 
 export class LirePartenaire extends Action<PartenairesActionsChainData> {
 
-    execute(resolve:(data?:PartenairesActionsChainData)=>void, reject:(error:any)=>void) {
+    execute(resolve:(data?:ActionsChainData)=>void, reject:(error:any)=>void) {
         try {
             logger.info("Action: PrepareDetailPartenaire");
             var store = this.actionContext.getStore(PageInformationStore);
 
             // On demande un chargement par id
-            this.getInstance(FichePartenaireApi, store.getCurrentUser()).charger(this.payload.id, this.payload.mode).then((retourApi:PartenairesActionsChainData) => {
+            this.getInstance(FichePartenaireApi, store.getCurrentUser()).charger(this.payload.id, this.payload.mode).then((retourApi:ActionsChainData) => {
                 logger.trace("Partenaire reçu:", retourApi.result);
 
-                    this.actionContext.dispatch("PARTENAIRE_RECEIVE_FORM_DATA", {
-                        data: retourApi.result,
-                        mode: this.payload.mode
-                    });
-                    this.actionChainData.partenaireNationalite$text = retourApi.result.nationalite$text;
-                    resolve(retourApi);
+                this.actionContext.dispatch("PARTENAIRE_RECEIVE_FORM_DATA", {
+                    data: retourApi.result,
+                    mode: this.payload.mode
+                });
+                this.actionChainData.partenaireNationalite$text = retourApi.result.nationalite$text;
+                resolve(retourApi);
             }, (error:Error) => {
                 reject(new WError(error, this.actionContext.i18n("error.message.ER-PA-FPA-05")));
             });
@@ -146,7 +142,7 @@ export class LirePartenaire extends Action<PartenairesActionsChainData> {
 }
 
 export class Valider extends Action<PartenairesActionsChainData> {
-    execute(resolve, reject) {
+    execute(resolve:(data?:PartenairesActionsChainData)=>void, reject:(error:any)=>void) {
 
         logger.debug("Validation d'un partenaire:", this.payload);
         var formClass = (<any>FichePartenaireForm)(this.actionContext.getStore(FichePartenaireStore), this.actionContext.i18n("partenaireFichePage.form"));
@@ -156,7 +152,7 @@ export class Valider extends Action<PartenairesActionsChainData> {
         if (!form.validate()) {
             this.actionChainData.formError = form.errors();
             logger.error("Formulaire Invalide:", form.errors());
-            reject();
+            reject(new WError("Formulaire Invalide:", form.errors()));
             return;
         }
         logger.info("Formulaire Valide");
@@ -166,12 +162,12 @@ export class Valider extends Action<PartenairesActionsChainData> {
 
 export class EcrirePartenaire extends Action<PartenairesActionsChainData> {
 
-    execute(resolve, reject) {
+    execute(resolve:(data?:ActionsChainData)=>void, reject:(error:any)=>void) {
         try {
             logger.info("Action: EcrirePartenaire", this.payload);
             var store = this.actionContext.getStore(PageInformationStore);
 
-            this.getInstance(FichePartenaireApi,store.getCurrentUser()).modifier(this.payload.id, this.payload.data).then((retourApi:ActionsChainData)=> {
+            this.getInstance(FichePartenaireApi, store.getCurrentUser()).modifier(this.payload.id, this.payload.data).then((retourApi:ActionsChainData)=> {
                 logger.info("Retour d\"enregistrement OK", retourApi);
                 resolve(retourApi);
             }, (error) => {
@@ -195,7 +191,7 @@ export class NotifierPartenaireSauvegarde extends Action<PartenairesActionsChain
      * @param resolve fonction utilisée en cas de succès
      * @param reject fonction utilisée en cas d"échec
      */
-    execute(resolve:(data?:PartenairesActionsChainData) => void, reject:(error:any) => void) {
+    execute(resolve:(data?:ActionsChainData) => void, reject:(error:any) => void) {
         logger.info("Action: NotifierPartenaireModifie");
 
         var notifText:string = this.actionContext.formatMsg(this.actionContext.i18n("info.message.IN-PA-FPA-01"), {

@@ -1,4 +1,3 @@
-///<reference path="../../../node_modules/app/hornet-js-ts-typings/definition.d.ts"/>
 "use strict";
 import utils = require("hornet-js-utils");
 import BaseStore = require("fluxible/addons/BaseStore");
@@ -12,14 +11,14 @@ class ProduitStore extends BaseStore {
 
     private produits:Array<any>;
 
-    static handlers:any =  {
+    static handlers:any = {
         "PRODUIT_RECEIVE_REPARTITION": function (produits) {
             logger.debug("PRODUIT_RECEIVE_REPARTITION : ", produits);
             this.updateData(produits);
         }
     };
 
-    private updateData (produits) {
+    private updateData(produits) {
         var stateChange = !_.isEqual(this.produits, produits);
         if (stateChange) {
             this.produits = produits;

@@ -1,4 +1,3 @@
-///<reference path="../../../node_modules/app/hornet-js-ts-typings/definition.d.ts"/>
 "use strict";
 import ServiceApi = require("hornet-js-core/src/services/service-api");
 import utils = require("hornet-js-utils");
@@ -10,7 +9,7 @@ var logger = utils.getLogger("applitutoriel.services.adm.adm-rps-api");
 class ProduitApi extends ServiceApi {
     repartition() {
         logger.info("SERVICES - repartition");
-        return new ExtendedPromise((resolve:(n: ActionsChainData) => void, reject) => {
+        return new ExtendedPromise((resolve:(n:ActionsChainData) => void, reject) => {
             logger.debug("Demande de repartition des produits sur le serveur");
             this.request()
                 .get(this.buildUrl("/produits"))
@@ -18,4 +17,5 @@ class ProduitApi extends ServiceApi {
         });
     }
 }
+
 export = ProduitApi;

@@ -1,9 +1,8 @@
-///<reference path="../node_modules/app/hornet-js-ts-typings/definition.d.ts"/>
 "use strict";
 
 import N = require("hornet-js-core/src/routes/notifications");
 
-//Polyfill internationalisation
+// Polyfill internationalisation
 if (!(<any>window).Intl) {
     (<any>require).ensure(["intl"], (require) => {
         (<any>window).Intl = require("intl");
@@ -14,14 +13,12 @@ if (!(<any>window).Intl) {
     startClient();
 }
 function startClient() {
-    //L'import du logger doit être fait le plus tôt possible
+    // L'import du logger doit être fait le plus tôt possible
 
     var utils = require("hornet-js-utils");
     var Client = require("hornet-js-core/src/client");
 
-    var ClientLog = require("hornet-js-core/src/log/client-log");
-    var logger = utils.getLogger("applitutoriel.client",
-        ClientLog.getLoggerBuilder(utils.config.getOrDefault("log", {})));
+    var logger = utils.getLogger("applitutoriel.client");
 
     var Routes = require("src/routes/routes");
     var AppDispatcher = require("src/dispatcher/app-dispatcher");
@@ -73,10 +70,28 @@ function startClient() {
             errorComponent: ErreurPage,
             routesLoaderfn: routeLoader,
             defaultRoutesClass: new Routes(),
-            dispatcher: appDispatcher
+            dispatcher: appDispatcher,
+            directorClientConfiguration: {
+                html5history: true,
+                strict: false,
+                convert_hash_in_init: false,
+                recurse: false,
+                notfound: function () {
+                    logger.error("Erreur. Cette route n'existe pas :'" + this.path + "'");
+                }
+            }
         };
 
-        Client.initAndStart(configClient).fail((err) => {
+        // On supprime le spinner de chargement de l'application
+        // Cela ne gêne pas React car il est en dehors de sa div "app"
+        var readyCallback = function () {
+            var appLoading = document.getElementById("firstLoadingSpinner");
+            if (appLoading) {
+                appLoading.parentNode.removeChild(appLoading);
+            }
+        };
+
+        Client.initAndStart(configClient, readyCallback).fail((err) => {
             logger.error("Erreur lors du chargement de l'appli côté client (initAndStart)", err);
         });
     } catch (exc) {

@@ -1,3 +1,22 @@
+# Applitutoriel-js 5.0.1
+
+- 0054994: [hornet] Erreur de chargement des annotations (heurtemattes) - traité.
+- 0055213: [hornet] IE10 : erreur après validation d'un partenaire (brierel) - traité.
+- 0055208: [hornet] IE11 : fiche partenaire non rafraîchie (glotainyy) - traité.
+- 0055989: [hornet] Retour de modification partenaire : perte de la pagination (brierel) - traité.
+- 0055104: [hornet] Champ envoi de fichier mal pris en compte sous firefox (bozecm) - traité.
+- 0053209: [hornet] Gestion des droits et rafraichissement (buganp) - traité.
+- 0055330: [hornet] Mock : authentification toujours en "guest" (brierel) - traité.
+- 0055153: [hornet] Les listes liées pays/ville ne sont plus correlées (brierel) - traité.
+- 0055142: [hornet] Afficher une sorte de spinner le temps du chargement des ressources lors d'un rendu serveur (buganp) - traité.
+- 0055534: [hornet] Retour fiche partenaire : route cancel (bozecm) - traité.
+- 0055456: [hornet] Création de partenaire : pas de ville en Afghanistan (brierel) - traité.
+- 0055161: [hornet] Code HTML généré différent côté client et côté serveur (brierel) - traité.
+- 0055218: [hornet] IE : affichage incorrect du bouton de filtre résultats (glotainyy) - traité.
+- 0055217: [hornet] IE11 : pas d'ascenseur (brierel) - traité.
+- 0055216: [hornet] IE10 : problème avec l'autocomplétion (brierel) - traité.
+- 0053018: [hornet] Mode Full Spa KO (heurtemattes) - traité.
+
 # Applitutoriel-js 5.0.0-rc4
 - 53188 - Ecran recherche partenaire : réinitialisation des champs dates
 - 53381 - Normalisation des imports
@@ -25,7 +44,7 @@
 - 53280 - Regression de version de dépendances et nouvelles dépendancs
 - 53267 - reorganisation des resources json
 - 53268 - Version de l'application
-- 53295 - Barre d'accessibilité : fixe sur le thème intranet
+- 53295 - Barre d'accessibilité : fixe sur le thème default
 - 53283 - Ecran recherche partenaire : Vip doit être en majuscule
 - 53353 - Ecran recherche partenaire : I18N liste des secteurs
 - 53354 - Ecran liste des secteurs : Modale avec style en dur
@@ -142,7 +161,7 @@
 - 51791  -  DEV_APT_HAN  -  En tant que Developpeur je peux utiliser React pour le template de page
 - 51792  -  DEV_DEV_DTS  -  En tant que Developpeur je peux mettre des point d'arret dans les TS 
 - 51793  -  DEV_DEV_SCO  -  En tant que Developpeur je peux Lancer les application sans ligne de commande
-- 51794  -  DEV_TEM_TJS  -  En tant que Developpeur je peux Constuire une application Node JS basée sur yeoman (thème Intranet)
+- 51794  -  DEV_TEM_TJS  -  En tant que Developpeur je peux Constuire une application Node JS basée sur yeoman (thème default)
 - 51795  -  DEV_TEM_TJA  -  En tant que Developpeur je peux Constuire une application Service basée sur Maven (Archetype)
 - 51796  -  UTI_APT_ECS  -  En tant que Utilisateur je peux Exporter les données du tableau partenaire au format CSV
 - 51797  -  UTI_APT_EXL  -  En tant que Utilisateur je peux Exporter les données du tableau partenaire au format EXL

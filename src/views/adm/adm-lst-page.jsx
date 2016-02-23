@@ -8,7 +8,7 @@ var SecteurStore = require("src/stores/adm/adm-lst-store");
 var PageInformationsStore = require("hornet-js-core/src/stores/page-informations-store");
 var HornetComponentMixin = require("hornet-js-core/src/mixins/react-mixins");
 var ListForm = require("src/views/adm/adm-lst-form");
-var Form = require("hornet-js-components/src/form/form");
+var HornetForm = require("hornet-js-components/src/form/form");
 var GridForm = require("hornet-js-components/src/form/grid-form");
 var Modal = require("hornet-js-components/src/dialog/modal");
 var Alert = require("hornet-js-components/src/dialog/alert");
@@ -152,7 +152,7 @@ var SecteursPage = React.createClass({
                           title={this.state.modaleTitle} closeLabel={this.state.modaleClose}>
                 <div className="content-modal-body">
                     <Notification isModal={true}/>
-                    <Form
+                    <HornetForm
                         form={this.state.formClass}
                         formConf={formConf}
                         buttons={this.getButtons()}
@@ -165,10 +165,7 @@ var SecteursPage = React.createClass({
                         <Row>
                             <Field name="desc" labelClass={"pure-u-1-3"}/>
                         </Row>
-                        <Row>
-                            <Field name="date" labelClass={"pure-u-1-3"}/>
-                        </Row>
-                    </Form>
+                    </HornetForm>
                 </div>
             </Modal>
         );
@@ -187,7 +184,6 @@ var SecteursPage = React.createClass({
      * @returns {string} la date formatée suivant le format défini pour les calendriers
      */
     getDateFormatee: function (time) {
-        //TODO Uniformiser ce code car la date n"est pas affichée de la même manière côté client/serveur (-> fuseau horaire potentiellement différent?)
         return utils.dateUtils.format(new Date(time), this.i18n("calendar"));
     },
 

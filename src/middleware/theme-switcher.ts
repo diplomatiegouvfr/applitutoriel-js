@@ -1,10 +1,11 @@
-///<reference path="../../node_modules/app/hornet-js-ts-typings/definition.d.ts"/>
+"use strict";
 
 import utils = require("hornet-js-utils");
-import ServerConfiguration = require("hornet-js-core/src/server-conf");
-import HornetMiddlewares = require("hornet-js-core/src/middleware/middlewares")
+import HornetMiddlewares = require("hornet-js-core/src/middleware/middlewares");
+
 class ThemeSwitcherMiddleware extends HornetMiddlewares.AbstractHornetMiddleware {
-    private static logger = utils.getLogger("applitutoriel.middleware.ThemeSwitcherMiddleware")
+    private static logger = utils.getLogger("applitutoriel.middleware.ThemeSwitcherMiddleware");
+
     constructor() {
         ThemeSwitcherMiddleware.logger.info("MIDDLEWARE CONFIGURATION : Init ThemeSwitcherMiddleware...");
         super(null, null, (req, res, next) => {

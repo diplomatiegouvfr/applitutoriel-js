@@ -1,4 +1,3 @@
-///<reference path="../../../node_modules/app/hornet-js-ts-typings/definition.d.ts"/>
 "use strict";
 import Photo = require("hornet-js-core/src/data/file");
 

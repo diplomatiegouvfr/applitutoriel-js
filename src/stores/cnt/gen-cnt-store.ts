@@ -1,4 +1,3 @@
-///<reference path="../../../node_modules/app/hornet-js-ts-typings/definition.d.ts"/>
 "use strict";
 
 import utils = require("hornet-js-utils");
@@ -6,7 +5,7 @@ import BaseStore = require("fluxible/addons/BaseStore");
 
 var logger = utils.getLogger("applitutoriel.stores.cnt.gen-cnt-store");
 
-class ContactStore extends BaseStore{
+class ContactStore extends BaseStore {
 
     static storeName:string = "ContactStore";
 

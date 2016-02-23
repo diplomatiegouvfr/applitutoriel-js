@@ -1,28 +1,28 @@
 "use strict";
 
-var utils = require('hornet-js-utils');
-var React = require('react');
+var utils = require("hornet-js-utils");
+var React = require("react");
 var logger = utils.getLogger("applitutoriel.test.page.exemple-page");
-var HornetComponentMixin = require('hornet-js-core/src/mixins/react-mixins');
+var HornetComponentMixin = require("hornet-js-core/src/mixins/react-mixins");
 
-var newforms = require('newforms');
-var Form = require('hornet-js-components/src/form/form');
-var GridForm = require('hornet-js-components/src/form/grid-form');
+var newforms = require("newforms");
+var Form = require("hornet-js-components/src/form/form");
+var GridForm = require("hornet-js-components/src/form/grid-form");
 var Row = GridForm.Row;
 var Field = GridForm.Field;
 
 var ExampleForm = newforms.Form.extend({
     nom: newforms.CharField({
         required: true,
-        errorMessages: {required: 'Le champ « Nom » est obligatoire. Veuillez saisir ce champ.'}
+        errorMessages: {required: "Le champ « Nom » est obligatoire. Veuillez saisir ce champ."}
     }),
     prenom: newforms.CharField({
         required: true,
-        errorMessages: {required: 'Le champ « Prénom » est obligatoire. Veuillez saisir ce champ.'}
+        errorMessages: {required: "Le champ « Prénom » est obligatoire. Veuillez saisir ce champ."}
     }),
-    errorCssClass: 'error',
-    requiredCssClass: 'required',
-    validCssClass: 'valid'
+    errorCssClass: "error",
+    requiredCssClass: "required",
+    validCssClass: "valid"
 });
 
 var ExamplePage = React.createClass({

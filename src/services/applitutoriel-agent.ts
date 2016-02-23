@@ -1,4 +1,3 @@
-///<reference path="../../node_modules/app/hornet-js-ts-typings/definition.d.ts"/>
 "use strict";
 import utils = require("hornet-js-utils");
 import HornetSuperAgentRequest = require("hornet-js-core/src/services/hornet-superagent-request");

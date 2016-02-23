@@ -1,4 +1,3 @@
-///<reference path="../../../node_modules/app/hornet-js-ts-typings/definition.d.ts"/>
 "use strict";
 
 import React = require("react");
@@ -16,6 +15,7 @@ var Field = GridForm.Field;
 var logger = utils.getLogger("applitutoriel.views.cnt.gen-cnt-page");
 
 @HornetComponent.ApplyMixins()
+@HornetComponent.Error()
 class ContactPage extends HornetComponent<any,any> {
 
     static displayName:string = "ContactPage";
@@ -30,8 +30,7 @@ class ContactPage extends HornetComponent<any,any> {
             onChange: this.forceUpdate.bind(this),
             autoId: "{name}",
             data: formData || null,
-            controlled: true,
-            validation: "manual"
+            controlled: true
         };
         var intlMess = this.i18n("contactPage");
         var formClass = ContactForm(intlMess.form);
@@ -83,7 +82,7 @@ class ContactPage extends HornetComponent<any,any> {
                     form={this.state.form}
                     buttons={this.getDefaultButtons()}
                     onSubmit={this.onSubmit}
-                    action="/contact/send">
+                >
 
                     <Row>
                         <Field name="nom" labelClass={"pure-u-1-3"}/>

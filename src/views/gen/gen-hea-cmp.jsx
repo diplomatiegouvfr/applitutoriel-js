@@ -6,7 +6,7 @@ var logger = utils.getLogger("applitutoriel.views.gen.gen-hea-cmp");
 var HornetComponentMixin = require("hornet-js-core/src/mixins/react-mixins");
 var PageInformationsStore = require("hornet-js-core/src/stores/page-informations-store");
 
-var AccessibleComposant = require("src/views/gen/gen-acs-cmp.jsx");
+var AccessibleComposant = require("src/views/gen/gen-acs-cmp");
 
 var Header = React.createClass({
     mixins: [HornetComponentMixin],
@@ -41,7 +41,7 @@ var Header = React.createClass({
 
         var applicationTitle = this.props.applicationTitle;
         var messIntl = this.i18n("header");
-        var title = messIntl.logoTitle + applicationTitle;
+        var title = messIntl.logoTitle;
         return (
             <div>
                 {this._getAccessibleComposant()}

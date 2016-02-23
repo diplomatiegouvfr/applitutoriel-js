@@ -6,10 +6,38 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Accueil</title>
     <script type="text/javascript">
+
+        // Polyfill pour Object.assign
+        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign#Polyfill
+        // fonction non implementée dans Internet Explorer
+        if (typeof Object.assign != 'function') {
+            (function () {
+                Object.assign = function (target) {
+                    'use strict';
+                    if (target === undefined || target === null) {
+                        throw new TypeError('Cannot convert undefined or null to object');
+                    }
+
+                    var output = Object(target);
+                    for (var index = 1; index < arguments.length; index++) {
+                        var source = arguments[index];
+                        if (source !== undefined && source !== null) {
+                            for (var nextKey in source) {
+                                if (source.hasOwnProperty(nextKey)) {
+                                    output[nextKey] = source[nextKey];
+                                }
+                            }
+                        }
+                    }
+                    return output;
+                };
+            })();
+        }
+
         // Charge un fichier JSON de manière asynchrone et appelle la fonction de callback quand le chargement est terminé
         function loadJsonAsynchronously(callback, file) {
             var xobj = new XMLHttpRequest();
-            xobj.open('GET', file);
+            xobj.open("GET", file);
             xobj.onreadystatechange = function () {
                 if (xobj.readyState == 4 && xobj.status == "200") {
                     callback(xobj.responseText);
@@ -21,7 +49,7 @@
         // Ajoute dans le DOM la demande de chargement d'un fichier JS ou CSS
         function loadFileInDom(filename, filetype, mountingPoint) {
             if (filetype == "js") {
-                var fileref = document.createElement('script');
+                var fileref = document.createElement("script");
                 fileref.setAttribute("type", "text/javascript");
                 fileref.setAttribute("src", filename);
             }
@@ -41,37 +69,92 @@
                 document.getElementsByTagName(mountingPoint)[0].appendChild(fileref);
             }
         }
-
     </script>
     <script type="text/javascript">
 
         (function (root) {
-            var messages = undefined;
-            var menuItems = undefined;
-            var config = undefined;
+            var contextAppli = "/applitutoriel";
+            var messages;
+            var menuItems;
+            var config;
+            var defaultConfig;
 
             loadJsonAsynchronously(function (response) {
-                messages = JSON.parse(response);
+                messages = JSON.parse(stripComments(response));
                 buildConfigurationAndLoadScript();
-            }, '/applitutoriel-spa/static/messages.json');
+            }, contextAppli + "/messages.json");
 
             loadJsonAsynchronously(function (response) {
-                menuItems = JSON.parse(response);
+                menuItems = JSON.parse(stripComments(response));
                 buildConfigurationAndLoadScript();
-            }, '/applitutoriel-spa/static/navigation.json');
+            }, contextAppli + "/navigation.json");
 
             loadJsonAsynchronously(function (response) {
-                config = JSON.parse(response);
+                defaultConfig = JSON.parse(stripComments(response));
                 buildConfigurationAndLoadScript();
-            }, '/applitutoriel-spa/static/config-spa.json');
+            }, contextAppli + "/default.json");
+
+            loadJsonAsynchronously(function (response) {
+                config = JSON.parse(stripComments(response));
+                buildConfigurationAndLoadScript();
+            }, contextAppli + "/config-spa.json");
+
+            function stripComments(jsonString) {
+                var uid = '_' + +new Date(),
+                        primitives = [],
+                        primIndex = 0;
+
+                return (
+                        jsonString
+                        /* Remove strings */
+                                .replace(/(['"])(\\\1|.)+?\1/g, function(match){
+                                    primitives[primIndex] = match;
+                                    return (uid + '') + primIndex++;
+                                })
+
+                                /* Remove Regexes */
+                                .replace(/([^\/])(\/(?!\*|\/)(\\\/|.)+?\/[gim]{0,3})/g, function(match, $1, $2){
+                                    primitives[primIndex] = $2;
+                                    return $1 + (uid + '') + primIndex++;
+                                })
+
+                                /*
+                                 - Remove single-line comments that contain would-be multi-line delimiters
+                                 E.g. // Comment /* <--
+                                 - Remove multi-line comments that contain would be single-line delimiters
+                                 E.g. /* // <--
+                                 */
+                                .replace(/\/\/.*?\/?\*.+?(?=\n|\r|$)|\/\*[\s\S]*?\/\/[\s\S]*?\*\//g, '')
+
+                                /*
+                                 Remove single and multi-line comments,
+                                 no consideration of inner-contents
+                                 */
+                                .replace(/\/\/.+?(?=\n|\r|$)|\/\*[\s\S]+?\*\//g, '')
+
+                                /*
+                                 Remove multi-line comments that have a replaced ending (string/regex)
+                                 Greedy, so no inner strings/regexes will stop it.
+                                 */
+                                .replace(RegExp('\\/\\*[\\s\\S]+' + uid + '\\d+', 'g'), '')
+
+                                /* Bring back strings & regexes */
+                                .replace(RegExp(uid + '(\\d+)', 'g'), function(match, n){
+                                    return primitives[n];
+                                })
+                );
+            }
 
             function buildConfigurationAndLoadScript() {
-                if (!messages || !menuItems || !config) {
-                    console.log('Chargement non terminé, attente de la prochaine exécution de cette fonction');
+                if (!messages || !menuItems || !config || !defaultConfig) {
+                    console.log("Chargement non terminé, attente de la prochaine exécution de cette fonction");
                     return;
                 }
+
+                config = Object.assign(defaultConfig, config);
+
                 // Tout est correctement chargé, on peut y aller
-                console.log('Chargement de la configuration terminée, chargement de la page');
+                console.log("Chargement de la configuration terminée, chargement de la page");
 
                 // On insère le contenu du tableau
                 config.dispatcher.stores.NavigationBaseStore.menuItems = menuItems.menu;
@@ -86,17 +169,19 @@
                         }
                     }
                 };
-                root.Config = {
-                    "commons": config.commons,
-                    "client": config.client
-                };
 
-                var themeCss = config.dispatcher.stores.PageInformationStore.themeCss;
-                var themeUrl = themeCss.cdn + "/" + themeCss.version + "/" + themeCss.name;
+                root.Config = config;
 
-                loadFileInDom(themeUrl + "/img/logo.png", "icon");
-                loadFileInDom(themeUrl + "/css/theme.css", "css");
-                loadFileInDom("/applitutoriel-spa/static/js/client.js", "js", "body");
+                root.Mode = config.mode;
+
+                root.AppSharedProps = config.AppSharedProps;
+                root.AppSharedProps.loginUrl = config.authentication.loginUrl;
+                root.AppSharedProps.logoutUrl = config.authentication.logoutUrl;
+                root.AppSharedProps.welcomePageUrl = config.welcomePage;
+
+                loadFileInDom(config.themeUrl + "/img/logo.png", "icon");
+                loadFileInDom(config.themeUrl + "/css/theme.css", "css");
+                loadFileInDom(contextAppli + "/js/client.js", "js", "body");
             }
 
         }(this));
@@ -104,7 +189,7 @@
 </head>
 
 <body>
-<div id="app"></div>
+    <div id="app"></div>
 </body>
 
 </html>

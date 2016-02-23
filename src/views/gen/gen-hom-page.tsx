@@ -1,4 +1,3 @@
-///<reference path="../../../node_modules/app/hornet-js-ts-typings/definition.d.ts"/>
 
 import React = require("react");
 import HornetComponent = require("hornet-js-components/src/hornet-component");
@@ -6,6 +5,7 @@ import utils = require("hornet-js-utils");
 var logger = utils.getLogger("applitutoriel.views.gen.gen-hom-page");
 
 @HornetComponent.ApplyMixins()
+@HornetComponent.Error()
 class HomePage extends HornetComponent<any,any> {
 
     static displayName:string = "HomePage";
@@ -17,13 +17,9 @@ class HomePage extends HornetComponent<any,any> {
     static defaultProps = {
         themes: [
             {
-                key: "intranet",
-                label: "Thème Diplonet (intranet)"
+                key: "default",
+                label: "Thème default"
             }
-            //,{
-            //    key: "internet",
-            //    label: "Thème France Diplomatie (internet)"
-            //}
         ]
     };
 

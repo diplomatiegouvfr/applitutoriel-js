@@ -1,4 +1,3 @@
-///<reference path="../../../node_modules/app/hornet-js-ts-typings/definition.d.ts"/>
 "use strict";
 import routerInterfaces = require("hornet-js-core/src/routes/router-interfaces");
 import utils = require("hornet-js-utils");
@@ -33,4 +32,5 @@ class ProduitsRoutes implements routerInterfaces.IRoutesBuilder {
         });
     }
 }
+
 export = ProduitsRoutes;

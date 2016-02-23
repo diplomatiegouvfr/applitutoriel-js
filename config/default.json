@@ -1,15 +1,50 @@
 {
-  "contextPath": "applitutoriel-5.0.0",
+  "contextPath": "applitutoriel",
   "welcomePage": "/accueil",
   "server": {
     "route": "js1",
     "port": 8888,
+    "portMonitor": 9999,
     "keepAlive": true,
+    "keepAliveTimeout": 15000,
     "maxConnections": 100,
     "timeout": 300000,
     "uploadFileSize": 1000000,
-    "sessionTimeout": 1800000
+    "sessionTimeout": 1800000,
+    "stackTraceLimit": 100
+//    "https": {
+//      "cert": "/path/to/client/certificate/in/pem/format",
+//      "key": "/path/to/client/private/key/in/pem/format",
+//      "passphrase": "password"
+//    }
+    //ex : openssl req -x509 -sha256 -newkey rsa:2048 -keyout key.pem -out cert.pem -days XXX
   },
+  /*
+  "keystore": {
+    // Autorités de certification
+    "CAs": [
+      "/path/to/igca.pem"
+    ],
+
+    // Cas d'authentification SSL
+    "CERTs" : [
+      "/path/to/client/certificate/in/pem/format"
+    ],
+    "KEYs": [
+      {
+        "file": "/path/to/client/private/key/in/pem/format",
+        "passphrase": "abcdefgh"
+      }
+    ],
+
+
+    // Cas d'un conteneur PKCS12
+    "PKCS12": {
+      "file": "/path/to/pkcs12",
+      "passphrase": "abcdefgh"
+    }
+  },
+  */
   "cookie": {
     //"domain": null,
     //"path": null,
@@ -17,8 +52,8 @@
     "secure": false
     //"alwaysSetCookie": false
   },
-  "themeHost": "http://localhost:7777",
-  "themeUrl": "${themeHost}/5.0.0/default",
+  "themeHost": "http://127.0.0.1:7777",
+  "themeUrl": "${themeHost}/5.0.1/default",
   "security": {
     "enabled": true,
     "hpp": true,
@@ -26,35 +61,28 @@
     "noSniff": true,
     "csp": {
       "enabled": true,
-      "defaultSrc": [
-        "'self'",
-        "'unsafe-inline'",
-        "'unsafe-eval'",
-        "${themeHost}"
-      ],
       "scriptSrc": [
         "'self'",
         "'unsafe-inline'",
         "'unsafe-eval'",
         "${themeHost}"
       ],
-      "styleSrc":[
+      "styleSrc": [
         "'self'",
         "'unsafe-inline'",
         "${themeHost}"
       ],
-      "fontSrc":[
+      "fontSrc": [
         "'self'",
         "${themeHost}"
       ],
-      "imgSrc":[
+      "imgSrc": [
         "'self'",
         "${themeHost}"
       ],
       "reportOnly": false,
-      "setAllHeaders": false,
-      "disableAndroid": false,
-      "safari5": false
+      "setAllHeaders": true,
+      "disableAndroid": false
     },
     "frameguard": {
       "enabled": true,
@@ -73,41 +101,18 @@
         "ZyXwVu456="
       ],
       "includeSubdomains": true,
-      "reportUri": null
+      "reportUri": null,
+      "reportOnly": false
     },
     "hsts": {
       "enabled": false,
       "maxAge": 10886400000,
-      "includeSubdomains": true,
+      "includeSubDomains": true,
       "preload": false
     },
     "csrf": {
-      "enabled": true,
-      "maxTokensPerSession": 10
+      "enabled": true
     }
-  },
-  "log": {
-    "levels": {
-      "[all]": "DEBUG",
-      "hornet-js-components.table": "TRACE"
-    },
-    "appenders": [
-      {
-        "type": "console",
-        "layout": {
-          "type": "pattern",
-          "pattern": "%[%d{ISO8601}|%x{tid}|%x{user}|%p|%c|%x{fn}|%m%]"
-        }
-      }
-      //        {
-      //          "type": "dateFile",
-      //          "filename": "log/app.log",
-      //          "layout": {
-      //            "type": "pattern",
-      //            "pattern": "%d{ISO8601}|%x{tid}|%x{user}|%p|%c|%x{fn}|%m"
-      //          }
-      //        }
-    ]
   },
   "logClient": {
     "remote": false,
@@ -115,10 +120,10 @@
     "appenders": [
       {
         "type": "BrowserConsole",
-//        "layout": {
-//          "type": "pattern",
-//          "pattern": "%p|%c|%m%"
-//        }
+        //        "layout": {
+        //          "type": "pattern",
+        //          "pattern": "%p|%c|%m%"
+        //        },
         "layout": {
           "type": "THIN"
         }
@@ -134,23 +139,49 @@
       }
     ]
   },
-  "services": {
-    "host": "http://localhost:8080/",
+  "defaultServices": {
+    "host": "http://localhost:8080",
+    "name": "applitutoriel-service"
+  },
+  "secteursServices": {
+    // configuration multi-service : exemple de definition d'un service specifique pour les secteurs
+    "host": "http://localhost:8080",
     "name": "applitutoriel-service"
   },
   "mock": {
-    "enabled": true,
-    "host": "127.0.0.1", //default localhost
-    "routes": "/mock/routes"
+    "enabled": false,
+    "routes": "/mock/routes",
+    "defaultServices": {
+      // service mock par defaut : le contexte est toujours "applitutoriel/hornet-mock"
+      "host": "http://localhost:${server.port}/"
+      //default localhost:8888
+    },
+    "secteursServices": {
+      // configuration multi-service : exemple de definition d'un mock specifique pour les secteurs
+      "host": "http://localhost:${server.port}/",
+      "name": "applitutoriel/hornet-mock"
+    }
   },
   "fullSpa": {
     "enabled": false,
     "host": "",
-    "name": "/services"
+    "name": "/services",
+    "staticPath": ""
   },
   "authentication": {
     "loginUrl": "/login",
-    "logoutUrl": "/logout"
+    "logoutUrl": "/logout",
+    "cas": {
+      "enabled": false,
+      "configuration": {
+        "hostUrlReturnTo": "http://localhost:8888",
+        "urls": {
+          "casValidate": "http://cas-url/serviceValidate",
+          "casLogin": "http://cas-url/login",
+          "casLogout": "http://cas-url/logout"
+        }
+      }
+    }
   },
   "cache": {
     "enabled": true,

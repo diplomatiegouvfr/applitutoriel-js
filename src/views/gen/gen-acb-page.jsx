@@ -165,13 +165,6 @@ var AccessibilitePage = React.createClass({
                                     pour augmenter la taille de la police et
                                     <kbd> Ctrl- </kbd>
                                     pour la diminuer.</p>
-                                <p className="texte">Sur les versions antérieures à
-                                    <span lang="en"> Internet explorer </span>
-                                    7 : dans la barre de menu en haut du navigateur, aller sur
-                                    <b> Affichage</b>
-                                &gt;
-                                    <b>Taille du texte </b>
-                                    et choisir la taille qui vous convient.</p>
 
                                 <h4>Charte graphique</h4>
                                 <p className="texte">La charte graphique a été définie et réalisée en prenant en

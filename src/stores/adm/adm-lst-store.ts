@@ -1,16 +1,12 @@
-///<reference path="../../../node_modules/app/hornet-js-ts-typings/definition.d.ts"/>
 "use strict";
 import utils = require("hornet-js-utils");
-var _ = utils._;
 
-import ActionsChainData = require("hornet-js-core/src/routes/actions-chain-data");
 import ITableStore = require("hornet-js-components/src/table/store/table-store-interface");
+import BaseStore = require("fluxible/addons/BaseStore");
 
 var logger = utils.getLogger("applitutoriel.stores.adm.adm-lst-store");
 
-import BaseStore = require("fluxible/addons/BaseStore");
-
-class SecteurStore extends BaseStore implements ITableStore{
+class SecteurStore extends BaseStore implements ITableStore {
 
     static storeName:string = "SecteurStore";
 
@@ -45,7 +41,7 @@ class SecteurStore extends BaseStore implements ITableStore{
         return this.secteurs;
     }
 
-    getAllResults():any {
+    getAllResults(key:string):any {
         logger.trace("Récupération des secteurs par le composant tableau");
         return {
             items: this.secteurs,
@@ -53,11 +49,11 @@ class SecteurStore extends BaseStore implements ITableStore{
         };
     }
 
-    getFilters():any {
+    getFilters(key:string):any {
         return null;
     }
 
-    getCriterias(){
+    getCriterias(key:string) {
         return null;
     }
 

@@ -1,7 +1,8 @@
 "use strict";
 class Hello {
     static sayHello(name:string):string {
-        return 'Hello, ' + name;
+        return "Hello, " + name;
     }
 }
 export = Hello;
+

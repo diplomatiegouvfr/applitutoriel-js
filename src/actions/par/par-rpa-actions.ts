@@ -1,16 +1,12 @@
-///<reference path="../../../node_modules/app/hornet-js-ts-typings/definition.d.ts"/>
 "use strict";
 import utils = require("hornet-js-utils");
 import Action = require("hornet-js-core/src/actions/action");
 import ActionsChainData = require("hornet-js-core/src/routes/actions-chain-data");
 import PartenaireApi = require("src/services/par/par-rpa-api");
 import FichePartenaireApi = require("src/services/par/par-fpa-api");
-import VilleApi = require("src/services/par/par-ville-api");
-import PaysApi = require("src/services/par/par-pays-api");
 import PartenairesActionsChainData = require("src/routes/par/partenaires-actions-chain-data");
 import MediaType = require("hornet-js-core/src/protocol/media-type");
 import SecteurStore = require("src/stores/adm/adm-lst-store");
-import TableStore = require("hornet-js-components/src/table/store/table-store");
 import PageInformationStore = require("hornet-js-core/src/stores/page-informations-store");
 import RecherchePartenaireForm = require("src/views/par/par-rpa-form");
 import N = require("hornet-js-core/src/routes/notifications");
@@ -75,7 +71,7 @@ export class Rechercher extends Action<PartenairesActionsChainData> {
         if (this.payload) {
             var newPayload = toCriteresRecherche(this.payload);
 
-            if(!newPayload){
+            if (!newPayload) {
                 logger.warn("Recherche non valide : Accès direct");
                 resolve();
             }
@@ -208,14 +204,16 @@ export class SupprimerEnMasse extends Action<PartenairesActionsChainData> {
                 if (item.isVIP) {
                     var notif:N.NotificationType = new N.NotificationType();
                     notif.id = "DEL_VIP_PARTNER" + item.id;
-                    notif.text = this.actionContext.formatMsg(this.actionContext.i18n('error.message.ER-PA-RPA-03'), {"nom": item.nom, "prenom":item.prenom });
+                    notif.text = this.actionContext.formatMsg(
+                        this.actionContext.i18n("error.message.ER-PA-RPA-03"),
+                        {nom: item.nom, prenom: item.prenom});
                     notifs.addNotification(notif);
                 }
                 else {
                     partenairesNotVip.push(item);
                 }
             });
-            if(notifs.getNotifications() && notifs.getNotifications().length > 0) {
+            if (notifs.getNotifications() && notifs.getNotifications().length > 0) {
                 this.actionContext.dispatch(Action.EMIT_ERR_NOTIFICATION, notifs);
             }
             logger.debug("partenairesNotVip :", partenairesNotVip);
@@ -229,7 +227,7 @@ export class SupprimerEnMasse extends Action<PartenairesActionsChainData> {
                         var notifText:string = this.actionContext.formatMsg(this.actionContext.i18n("info.message.IN-PA-RPA-01"), {
                             "nom": item.nom,
                             "prenom": item.prenom
-                        })
+                        });
 
                         var notifs:N.Notifications = N.Notifications.makeSingleNotification("DEL_PARTNER" + item.id, notifText);
 
@@ -261,7 +259,7 @@ export class Export extends Action<PartenairesActionsChainData> {
             logger.debug("Critères trouvés dans la session ", criteres);
 
             var payloadMediaType = this.payload.mediaType;
-            var extension = "xls"
+            var extension = "xls";
 
             logger.debug("MIMETYPE :", payloadMediaType);
             logger.debug("DEFAULT MIME TYPE :", this.actionChainData.requestMimeType);
@@ -298,7 +296,7 @@ export class Export extends Action<PartenairesActionsChainData> {
 
 function toCriteresRecherche(data:any) {
     var formData:any = _.extend(_.cloneDeep(data.criterias || data.criteres), _.cloneDeep(data.filters));
-    if(formData) {
+    if (formData) {
         formData = _.extend(formData, formData.partenaire);
         return {
             criteres: {
@@ -327,14 +325,14 @@ function toCriteresRecherche(data:any) {
 
 function toFormData(criterias:any):Object {
 
-    logger.debug('formatttage des criteres de recherche : ', criterias);
+    logger.debug("formatttage des criteres de recherche : ", criterias);
     var startDate:Date = null;
     /* Les dates ont été sérialisées sous forme de chaînes de caractères : on les reconvertit en objets Date */
-    if(_.isString(criterias.startDate)) {
+    if (_.isString(criterias.startDate)) {
         startDate = utils.dateUtils.stdParse(criterias.startDate);
     }
     var endDate:Date = null;
-    if(_.isString(criterias.endDate)) {
+    if (_.isString(criterias.endDate)) {
         endDate = utils.dateUtils.stdParse(criterias.endDate);
     }
     return {
@@ -344,4 +342,4 @@ function toFormData(criterias:any):Object {
         startDate: startDate,
         endDate: endDate
     };
-};
+}

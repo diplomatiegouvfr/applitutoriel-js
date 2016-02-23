@@ -1,4 +1,3 @@
-///<reference path="../../../node_modules/app/hornet-js-ts-typings/definition.d.ts"/>
 "use strict";
 import ServiceApi = require("hornet-js-core/src/services/service-api");
 import utils = require("hornet-js-utils");
@@ -10,9 +9,9 @@ var logger = utils.getLogger("applitutoriel.services.gen.gen-cnt-api");
 class ContactApi extends ServiceApi {
     send(data) {
         logger.info("SERVICES - send : ", data);
-        return new ExtendedPromise((resolve:(n: ActionsChainData) => void, reject) => {
+        return new ExtendedPromise((resolve:(n:ActionsChainData) => void, reject) => {
             var url = this.buildUrl("/contact/envoyer");
-            logger.debug("Envoi d'une deande de contact au serveur :", url, data);
+            logger.debug("Envoi d'une demande de contact au serveur :", url, data);
             this.request()
                 .post(url)
                 .send(data)
@@ -21,4 +20,5 @@ class ContactApi extends ServiceApi {
         });
     }
 }
+
 export = ContactApi;

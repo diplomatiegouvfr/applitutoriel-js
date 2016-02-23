@@ -1,4 +1,3 @@
-///<reference path="../../../node_modules/app/hornet-js-ts-typings/definition.d.ts"/>
 "use strict";
 
 import ITableStore = require("hornet-js-components/src/table/store/table-store-interface");
@@ -8,7 +7,7 @@ import BaseStore = require("fluxible/addons/BaseStore");
 
 var logger = utils.getLogger("applitutoriel.stores.par.par-rpa-store");
 
-class RecherchePartenaireStore extends BaseStore implements ITableStore{
+class RecherchePartenaireStore extends BaseStore implements ITableStore {
 
     static storeName:string = "RecherchePartenaireStore";
 
@@ -32,7 +31,7 @@ class RecherchePartenaireStore extends BaseStore implements ITableStore{
             this.tableVisible = true;
             this.emitChange();
         },
-        "PARTENAIRES_SAVE_CRITERIAS": function(res){
+        "PARTENAIRES_SAVE_CRITERIAS": function (res) {
             this.criterias = res;
         },
         "PARTENAIRES_REINITIALIZE": function () {
@@ -44,7 +43,7 @@ class RecherchePartenaireStore extends BaseStore implements ITableStore{
             logger.info("PARTENAIRES_RESET_FILTRE");
             this.filters = {};
         }
-    }
+    };
 
     constructor(dispatcher) {
         super(dispatcher);
@@ -57,7 +56,8 @@ class RecherchePartenaireStore extends BaseStore implements ITableStore{
             isClient: true,
             isVIP: false,
             idSecteur: "0",
-            startDate: RecherchePartenaireStore.START_DATE_DEFAULT
+            startDate: RecherchePartenaireStore.START_DATE_DEFAULT,
+            endDate: ""
         };
         this.filters = {};
         this.tableVisible = false;
@@ -68,17 +68,17 @@ class RecherchePartenaireStore extends BaseStore implements ITableStore{
         return this.tableVisible;
     }
 
-    getAllResults():any {
+    getAllResults(key:string):any {
         logger.debug("Récupération des partenaires.");
         return this.results;
     }
 
-    getFilters():any {
+    getFilters(key:string):any {
         logger.debug("Récupération des filters.");
         return this.filters;
     }
 
-    getCriterias():any {
+    getCriterias(key:string):any {
         logger.debug("Récupération des criteres.");
         return this.criterias;
     }
@@ -101,6 +101,5 @@ class RecherchePartenaireStore extends BaseStore implements ITableStore{
         };
     }
 }
-
 
 export = RecherchePartenaireStore;

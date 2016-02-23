@@ -1,4 +1,3 @@
-///<reference path="../../node_modules/app/hornet-js-ts-typings/definition.d.ts"/>
 "use strict";
 import utils = require("hornet-js-utils");
 import Partenaire = require("src/bo/par/par-rpa-bo");
@@ -24,7 +23,7 @@ var users = [
     },
     {
         "name": "admin",
-        "roles": [{"id": 1, "name": "AppliTuto_ADMIN"},{"id": 2, "name": "AppliTuto_USER"}]
+        "roles": [{"id": 1, "name": "AppliTuto_ADMIN"}, {"id": 2, "name": "AppliTuto_USER"}]
     }
 ];
 function findByUsername(username) {
@@ -46,13 +45,12 @@ class BouchonRoutes {
             this.res.send(tableauDePartenaires);
         });
 
-        router.get("/partenaires/:id", function (id) {
-            var idPartenaire = parseInt(id, 10), //
-                partenaire:Partenaire = null;
+        router.get("/partenaires/consulter/:id", function (id) {
+            var idPartenaire = parseInt(id, 10);
             logger.debug("Recupèrer le partenaire bouchonné qui à l\"id:", idPartenaire);
             var partenaire = _.find(partenaires, function (item:Partenaire) {
                 logger.debug(item);
-                if (item.id == id) {
+                if (item.id === id) {
                     return true;
                 }
             });
@@ -65,12 +63,10 @@ class BouchonRoutes {
             }
         });
 
-        router.delete("/partenaires/:id", function (id) {
-            var idPartenaire = parseInt(id, 10), //
-                partenaire = null;
+        router.delete("/partenaires/supprimer/:id", function (id) {
             logger.debug("Suppression du partenaire, id:", id);
             _.remove(partenaires, function (item:Partenaire) {
-                if (item.id == id) {
+                if (item.id === id) {
                     return true;
                 }
             });
@@ -84,7 +80,7 @@ class BouchonRoutes {
 
         });
 
-        router.put("/partenaires/:id", function () {
+        router.put("/partenaires/sauvegarder/:id", function () {
             this.res.send({
                 message: "partenaire envoyé"
             });
@@ -102,13 +98,13 @@ class BouchonRoutes {
         router.get("/produits", function () {
             this.res.send(produits);
         });
-        router.get("/villes", function () {
+        router.get("/partenaires/villes", function () {
             this.res.send(villes);
         });
-        router.get("/pays", function () {
+        router.get("/partenaires/pays", function () {
             this.res.send(pays);
         });
-        router.post("/pays/nationalites/rechercher", function () {
+        router.post("/partenaires/pays/nationalites/rechercher", function () {
             this.res.send(pays);
         });
 

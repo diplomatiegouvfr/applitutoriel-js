@@ -1,4 +1,3 @@
-///<reference path="../../node_modules/app/hornet-js-ts-typings/definition.d.ts"/>
 "use strict";
 
 import utils = require("hornet-js-utils");
@@ -28,6 +27,7 @@ class AuthenticationMiddleware extends HornetMiddlewares.AbstractHornetMiddlewar
         AuthenticationMiddleware.logger.info("MIDDLEWARE CONFIGURATION : Init AuthenticationMiddleware...");
         super(appConfig);
     }
+
     public insertMiddleware(app) {
         // init passport
         /**
@@ -37,7 +37,7 @@ class AuthenticationMiddleware extends HornetMiddlewares.AbstractHornetMiddlewar
             function (username, password, done) {
                 AuthenticationMiddleware.logger.info("Tentative d'authentification de l'utilisateur ", username);
 
-               var encodedPassword = sha1(password);
+                var encodedPassword = sha1(password);
                 new AuthentificationApi().auth({
                     login: username,
                     password: encodedPassword
@@ -69,6 +69,7 @@ class AuthenticationMiddleware extends HornetMiddlewares.AbstractHornetMiddlewar
         var loginUrl = utils.appSharedProps.get("loginUrl");
         var logoutUrl = utils.appSharedProps.get("logoutUrl");
         var welcomePageUrl = utils.appSharedProps.get("welcomePageUrl");
+
         function ensureAuthenticated(req, res, next) {
             if (req.isAuthenticated() || _.startsWith(req.originalUrl, loginUrl)) {
                 return next();
@@ -82,7 +83,15 @@ class AuthenticationMiddleware extends HornetMiddlewares.AbstractHornetMiddlewar
         app.use(passport.session());
 
         var dispatcherLoaderFn = RouterAbstract.prepareInternationalizationContextFunction(this.appConfig);
-        app.get(loginUrl, function (req, res) {
+        app.post(loginUrl,
+            passport.authenticate("local", {failureRedirect: utils.buildContextPath(loginUrl), failureFlash: true}),
+            function (req, res, next) {
+                AuthenticationMiddleware.logger.info("Authentification ok, redirection vers la page d'accueil");
+                var previousUrl = req.body.previousUrl || req.getSession().getAttribute("previousUrl") || utils.buildContextPath(welcomePageUrl);
+                res.redirect(previousUrl);
+            }
+        );
+        app.all(loginUrl, function (req, res) {
             var errors = req.flash("error");
             if (errors.length > 0 && errors[0] === "Missing credentials") {
                 errors = ["Votre identifiant ou votre mot de passe est incorrect"];
@@ -91,12 +100,12 @@ class AuthenticationMiddleware extends HornetMiddlewares.AbstractHornetMiddlewar
             var props = {"errorMessage": errors};
 
             // Cas d'un perte de connexion liée à un timeout
-            if(req.query.previousUrl) {
+            if (req.query.previousUrl) {
                 props["previousUrl"] = req.query.previousUrl;
             }
 
             // cas d'une perte de connexion liée à un timeout + F5
-            if(req.getSession().getAttribute("previousUrl") && !props["previousUrl"]) {
+            if (req.getSession().getAttribute("previousUrl") && !props["previousUrl"]) {
                 props["previousUrl"] = req.getSession().getAttribute("previousUrl");
                 req.getSession().removeAttribute("previousUrl");
             }
@@ -113,14 +122,6 @@ class AuthenticationMiddleware extends HornetMiddlewares.AbstractHornetMiddlewar
             res.setHeader("x-is-login-page", true);
             res.send(docTypeHtml + htmlApp);
         });
-        app.post(loginUrl,
-            passport.authenticate("local", {failureRedirect: utils.buildContextPath(loginUrl), failureFlash: true}),
-            function (req, res, next) {
-                AuthenticationMiddleware.logger.info("Authentification ok, redirection vers la page d'accueil");
-                var previousUrl = req.body.previousUrl || req.getSession().getAttribute("previousUrl") || utils.buildContextPath(welcomePageUrl);
-                res.redirect(previousUrl);
-            }
-        );
         app.get(logoutUrl, function (req, res, next) {
             // notifie passport
             req.logout();

@@ -49,6 +49,7 @@ var HornetApp = React.createClass({
 
         if (!composantPage) {
             var error = new WError(this.i18n("error.message.ER-GE-APP-01"));
+            error.name = " ";
             logger.error("HornetApp : Le composant à rendre est null", error);
             throw error;
         }

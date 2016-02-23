@@ -1,10 +1,13 @@
 {
+  // Commentaires autorisés !!
   "applicationTitle": "Application TUTORIEL",
   "errorsTitle": "Une erreur est survenue",
+  "applicationLoading": "Chargement de l'application, veuillez patienter ...",
   "authError": "Authentification refusée: l'utilisateur ne possède pas les droits suffisants pour accéder cette page",
+  "techError": "Une erreur technique est survenue",
   "form": {
     "valid": "Valider",
-    "validTitle": "Valider la saisie le formulaire",
+    "validTitle": "Valider la saisie du formulaire",
     "cancel": "Annuler",
     "cancelTitle": "Annuler la saisie du formulaire",
     "reinit": "Réinitialiser",
@@ -66,7 +69,11 @@
     "prevPage": "< Précédent",
     "nextPage": "Suivant >",
     "lastPage": ">>",
-    "displayAll": "Afficher tout"
+    "10": "10",
+    "50": "50",
+    "100": "100",
+    "displayAll": "Afficher tout",
+    "formatDateInvalid": "Le format du champ « {title} » est incorrect."
   },
   "calendar": {
     "agendaTitle": "Agenda",
@@ -176,7 +183,7 @@
     }
   },
   "header": {
-    "logoTitle": "Accueil - ",
+    "logoTitle": "Hornet - Retour vers la page d'accueil",
     "contentTitle": "Aller au contenu de l' ",
     "menuTitle": "Aller au menu de l' ",
     "planTitle": "Plan de l'application l' ",
@@ -213,6 +220,9 @@
       "listeSecteursTitle": "Affiche la liste des secteurs",
       "repartition": "Répartition"
     }
+  },
+  "application": {
+    "diplonet": "Retour à l'accueil de Diplonet"
   },
   "partenairesListePage": {
     "form": {
@@ -360,7 +370,7 @@
         },
         "proCourriel": {
           "label": "Courriel pro",
-          "minLength": "Le champ « Courriel pro » doit contenir au moins 3 characters .",
+          "minLength": "Le champ « Courriel pro » doit contenir au moins 3 characters.",
           "required": "Le champ « Courriel pro » est obligatoire. Veuillez saisir ce champ.",
           "emailInvalid": "Le format du champ « Courriel pro » est incorrect (format attendu: nom@example.com)"
         },
@@ -388,7 +398,7 @@
           "label": "Nom"
         },
         "assistPrenom": {
-          "label": "Prenom"
+          "label": "Prénom"
         },
         "assistTel": {
           "label": "Téléphone",
@@ -403,12 +413,13 @@
           "help": "Insérer une photo identifiant l'individu",
           "selection": "Photo de l'individu",
           "altImage": "Photo du Partenaire",
-          "maxSize": "La taille du fichier sélectionné dépasse la taille maximale autorisée",
-          "imageType": "Le type de fichier n'est pas valide (fichier attendu de type image: png, bmp, jpg...)"
+          "maxSize": "La taille du fichier sélectionné dépasse la taille maximale autorisée ({maxSizeInMB} Mo)",
+          "imageType": "Le type de fichier n'est pas valide (fichier attendu de type image: png, bmp, jpg...)",
+          "fileType": "Le type de fichier n'est pas valide. Types attendus : {fileTypeList}"
         },
         "commentaire": {
           "label": "Commentaire (limite 255 caractères).",
-          "maxLength": "Le champ \"Commentaire\" excède {limitValue} caractères  (actuellement {showValue}). Veuillez corriger la saisie de ce champ."
+          "maxLength": "Le champ « Commentaire » excède {limitValue} caractères  (actuellement {showValue}). Veuillez corriger la saisie de ce champ."
         },
         "satisfaction": {
           "label": "Comment avez-vous entendu parler de nous ?",
@@ -464,14 +475,14 @@
     "secteurs": {
       "titreSecteur": "Liste des secteurs",
       "tableTitle": "Adminitration des secteurs",
-      "captionText": "Liste des secteurs avec fonctionnalité de d'ajout/modification/suppression d'un secteur, de trier les secteurs",
+      "captionText": "Liste des secteurs avec fonctionnalités d'ajout/modification/suppression d'un secteur, de trier les secteurs",
       "emptyResult": "Aucun secteur présent",
       "nom": "Nom",
       "description": "Description",
       "dateCr": "Date de création",
       "dateMaj": "Date de mise à jour",
       "auteur": "Auteur de la création",
-      "suppresionTitle": "Suppresion du secteur {nom}",
+      "suppresionTitle": "Suppression du secteur {nom}",
       "modificationTitle": "Modification du secteur {nom}",
       "confirmationSuppression": "Etes-vous sûr(e) de vouloir supprimer ce secteur ?",
       "suppressionTitle": "Suppression de secteur",
@@ -516,12 +527,12 @@
       "ER-PA-FPA-03": "Erreur dans l'action de lister les nationalités: {msg}",
       "ER-PA-FPA-04": "Erreur dans l'action de LirePhoto pour partenaire",
       "ER-PA-FPA-05": "Erreur dans l'action de PrepareDetailPartenaire pour partenaire",
-      "ER-PA-FPA-06": "Erreur dans l'action de preparation des partenaires",
+      "ER-PA-FPA-06": "Erreur dans l'action de préparation des partenaires",
       "ER-PA-FPA-07": "Erreur dans l'action de sauvegarde du partenaire",
-      "ER-PA-FPA-08": "Erreur dans l'action de preparation des partenaires",
+      "ER-PA-FPA-08": "Erreur dans l'action de préparation des partenaires",
       "ER-PA-FPA-09": "Consultation : l'id partenaire doit être un entier. Données transmises : {id}",
       "ER-PA-FPA-10": "Erreur dans le retour du service de lecture de la photo du partenaire",
-      "ER-PA-RPA-01": "Erreur dans l'action : rechercher de partenaire",
+      "ER-PA-RPA-01": "Erreur dans l'action : recherche de partenaire",
       "ER-PA-RPA-02": "Erreur dans l'action : supprimerPartenaire pour partenaire",
       "ER-PA-RPA-03": "Le partenaire « {prenom} {nom} » n'a pas été supprimé : Impossible de supprimer un partenaire VIP.",
       "ER-PA-RPA-04": "Erreur dans l'action : supprimerEnMasse pour partenaire",

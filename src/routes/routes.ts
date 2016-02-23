@@ -1,10 +1,8 @@
-///<reference path="../../node_modules/app/hornet-js-ts-typings/definition.d.ts"/>
 "use strict";
 import routerInterfaces = require("hornet-js-core/src/routes/router-interfaces");
 import utils = require("hornet-js-utils");
 import Roles = require("src/utils/roles");
 
-var WError = utils.werror;
 var logger = utils.getLogger("applitutoriel.routes.routes");
 
 class Routes implements routerInterfaces.IRoutesBuilder {
@@ -21,8 +19,7 @@ class Routes implements routerInterfaces.IRoutesBuilder {
         match("/accueil", () => {
             logger.info("match route /accueil src/views/gen/gen-home-page");
             return {
-                composant: require("src/views/gen/gen-hom-page"),
-                //roles: Roles.USER
+                composant: require("src/views/gen/gen-hom-page")
             };
         });
 
@@ -62,7 +59,7 @@ class Routes implements routerInterfaces.IRoutesBuilder {
         match("/log", (context:routerInterfaces.IRouteContext) => {
             logger.info("match route /log");
 
-            //exemple d'utilisation d'un remote logger
+            // exemple d'utilisation d'un remote logger
             logger.info("REMOTE LOG ", context.req.body);
 
             return {};
@@ -79,4 +76,5 @@ class Routes implements routerInterfaces.IRoutesBuilder {
         match.lazy("/produits", "adm/adm-rps-routes");
     }
 }
+
 export = Routes;

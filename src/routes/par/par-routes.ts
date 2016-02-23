@@ -1,19 +1,13 @@
-///<reference path="../../../node_modules/app/hornet-js-ts-typings/definition.d.ts"/>
 "use strict";
 import IRoutes = require("hornet-js-core/src/routes/router-interfaces");
-import routerNs = require("hornet-js-core/src/routes/router-view");
 import utils = require("hornet-js-utils");
 import MediaType = require("hornet-js-core/src/protocol/media-type");
-import fvaNS = require("hornet-js-core/src/actions/form-validation-action");
 import Roles = require("src/utils/roles");
 
-import Action = require("hornet-js-core/src/actions/action");
-import ActionsChainData = require("hornet-js-core/src/routes/actions-chain-data");
 import SecteurAction = require("src/actions/adm/adm-lst-actions");
 import RecherchePartenairesAction = require("src/actions/par/par-rpa-actions");
 import FichePartenairesAction = require("src/actions/par/par-fpa-actions");
 import RedirectClientAction = require("hornet-js-core/src/actions/redirect-client-action");
-import SimpleAction = require("hornet-js-core/src/actions/simple-action");
 import routerInterfaces = require("hornet-js-core/src/routes/router-interfaces");
 
 var RecherchePartenairesPage = require("src/views/par/par-rpa-page");
@@ -32,14 +26,6 @@ class PartenairesRoutes implements IRoutes.IRoutesBuilder {
             logger.info("routes partenaires / ROUTER VIEW");
             return {
                 actions: [new SecteurAction.ListerSecteurs()],
-                composant: RecherchePartenairesPage,
-                roles: Roles.EVERYONE
-            };
-        });
-
-        match("/cancel", (context) => {
-            logger.info("routes partenaires cancel ROUTER VIEW :", context.req.body);
-            return {
                 composant: RecherchePartenairesPage,
                 roles: Roles.EVERYONE
             };
@@ -78,8 +64,7 @@ class PartenairesRoutes implements IRoutes.IRoutesBuilder {
 
             if (id === "0") {
                 actions.push(new RecherchePartenairesAction.SupprimerEnMasse().withPayload(context.req.body.selectedItems));
-            }
-            else {
+            } else {
                 actions.push(new RecherchePartenairesAction.SupprimerPartenaire().withPayload(id));
             }
 
@@ -93,8 +78,6 @@ class PartenairesRoutes implements IRoutes.IRoutesBuilder {
         });
 
         match("/sauvegarder", (context) => {
-            // TODO: Cette route devrait exister sous la forme d"un enchainement d'actions puisqu'elle ne reflète pas
-            // une url de l"application et n'est jamais exécutée côté serveur
             logger.info("routes partenaires sauvegarder (creation) ROUTER VIEW :", context.req.body);
             return {
                 actions: [
@@ -111,8 +94,6 @@ class PartenairesRoutes implements IRoutes.IRoutesBuilder {
         }, "put");
 
         match("/sauvegarder/:id", (context:routerInterfaces.IRouteContext, id) => {
-            // TODO: Cette route devrait exister sous la forme d'un enchainement d'actions puisqu'elle ne reflète pas
-            // une url de l'application et n'est jamais exécutée côté serveur
             logger.info("routes partenaires sauvegarder ROUTER VIEW 1 :", id);
             logger.info("routes partenaires sauvegarder ROUTER VIEW 2 :", context.req.body);
             var partenairePayload = {
@@ -123,7 +104,8 @@ class PartenairesRoutes implements IRoutes.IRoutesBuilder {
                 actions: [
                     new FichePartenairesAction.EcrirePartenaire().withPayload(partenairePayload),
                     new RedirectClientAction().withPayload("/partenaires"),
-                    /* les actions de recherche et de notification doivent être placées après l"action de redirection, sinon la notification n"est pas affichée */
+                    // les actions de recherche et de notification doivent être placées après l'action de redirection,
+                    // sinon la notification n"est pas affichée
                     new RecherchePartenairesAction.Rechercher().withPayload(context.req.body.recherche),
                     new FichePartenairesAction.NotifierPartenaireSauvegarde().withPayload(context.req.body.partenaire)
                 ],
@@ -159,7 +141,7 @@ class PartenairesRoutes implements IRoutes.IRoutesBuilder {
             }));
 
             if (mode === "editer") {
-                //actions.push(new FichePartenairesAction.ListerNationalites());  //Le payload est fourni par l"action précédente,
+                // actions.push(new FichePartenairesAction.ListerNationalites());  //Le payload est fourni par l"action précédente,
             }
             return {
                 actions: actions,
@@ -257,7 +239,7 @@ class PartenairesRoutes implements IRoutes.IRoutesBuilder {
 
             return {
                 actions: [
-                    new RecherchePartenairesAction.SupprimerPartenaire().withPayload(id),
+                    new RecherchePartenairesAction.SupprimerPartenaire().withPayload(id)
                 ],
                 roles: Roles.ADMIN
             };
@@ -280,14 +262,14 @@ class PartenairesRoutes implements IRoutes.IRoutesBuilder {
             logger.info("routes  partenaires sauvegarder (création) ROUTER DATA :", body);
 
             if (_.isString(body.content)) {
-                //Le contenu JSON a été posté dans le champ "content" de la requête, on récupère le string qu"on retranscrit en Objet
+                // Le contenu JSON a été posté dans le champ "content" de la requête, on récupère le string qu"on retranscrit en Objet
                 body = JSON.parse(body.content);
             }
 
-            //les uploads sont placés dans req.body.files
+            // les uploads sont placés dans req.body.files
             var request = context.req;
-            if (request.files && _.isArray(request.files.photo) && request.files.photo.length == 1) {
-                //On replace la photo dans l"objet
+            if (request.files && _.isArray(request.files["photo"]) && request.files["photo"].length === 1) {
+                // On replace la photo dans l"objet
                 body.photo = request.files["photo"][0];
             }
             return {
@@ -304,20 +286,19 @@ class PartenairesRoutes implements IRoutes.IRoutesBuilder {
         }, "post");
 
 
-        //TODO Devrait être un put -> put non ecouté ?
         match("/sauvegarder/:id", (context, id) => {
             var body = context.req.body;
             logger.info("routes partenaires sauvegarder ROUTER DATA :", id, body);
 
             if (_.isString(body.content)) {
-                //Le contenu JSON a été posté dans le champ "content" de la requête, on récupère le string qu"on retranscrit en Objet
+                // Le contenu JSON a été posté dans le champ "content" de la requête, on récupère le string qu'on retranscrit en Objet
                 body = JSON.parse(body.content);
             }
 
-            //les uploads sont placés dans req.body.files
+            // les uploads sont placés dans req.body.files
             var request = context.req;
-            if (request.files && _.isArray(request.files.photo) && request.files.photo.length == 1) {
-                //On replace la photo dans l"objet
+            if (request.files && _.isArray(request.files["photo"]) && request.files["photo"].length === 1) {
+                // On replace la photo dans l'objet
                 body.photo = request.files["photo"][0];
             }
 
@@ -333,8 +314,7 @@ class PartenairesRoutes implements IRoutes.IRoutesBuilder {
                 ],
                 roles: Roles.ADMIN
             };
-        }, "post");
-
+        }, "put");
 
         match("/photo/:id", (context, id) => {
             logger.info("routes partenaires Récupération PHOTO ROUTER DATA :", id);
@@ -342,7 +322,7 @@ class PartenairesRoutes implements IRoutes.IRoutesBuilder {
                 actions: [
                     new FichePartenairesAction.LirePhoto().withPayload({
                         idPhoto: id
-                    }),
+                    })
                 ],
                 roles: Roles.EVERYONE
             };
@@ -355,7 +335,7 @@ class PartenairesRoutes implements IRoutes.IRoutesBuilder {
                     new FichePartenairesAction.LirePartenaire().withPayload({
                         id: id,
                         mode: mode
-                    }),
+                    })
                 ],
                 roles: Roles.EVERYONE
             };
@@ -363,6 +343,5 @@ class PartenairesRoutes implements IRoutes.IRoutesBuilder {
 
     }
 }
-
 
 export = PartenairesRoutes;

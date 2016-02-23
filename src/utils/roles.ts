@@ -1,4 +1,3 @@
-///<reference path="../../node_modules/app/hornet-js-ts-typings/definition.d.ts"/>
 "use strict";
 
 /**
@@ -15,4 +14,4 @@ class Roles {
 
 }
 
-export = Roles
+export = Roles;

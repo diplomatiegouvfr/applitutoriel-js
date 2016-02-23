@@ -1,7 +1,5 @@
-///<reference path="../../../node_modules/app/hornet-js-ts-typings/definition.d.ts"/>
 "use strict";
 import utils = require("hornet-js-utils");
-import fluxibleAddons = require("fluxible/addons");
 import Photo = require("hornet-js-core/src/data/file");
 import BaseStore = require("fluxible/addons/BaseStore");
 
@@ -22,25 +20,14 @@ class FichePartenaireStore extends BaseStore {
 
     static handlers:any = {
         "REMOVE_PARTENAIRE_FORM_DATA": function () {
-
-            var ville = null;
-            var pays = this.pays[0];
-            if (pays) {
-                pays = pays.id;
-                ville = this.getListeVille(pays)[0];
-                if (ville) {
-                    ville = ville.id;
-                }
-            }
-
             this.currentFiche = {
                 partenaire: {
                     civilite: 0,
-                    pays: pays,
+                    pays: null,
                     isClient: false,
-                    ville: ville
+                    ville: null
                 },
-                modeFiche: 'creer'
+                modeFiche: "creer"
             };
         },
         "PARTENAIRE_RECEIVE_FORM_DATA": function (res) {
@@ -66,16 +53,6 @@ class FichePartenaireStore extends BaseStore {
                     text: nationalite.nationalite
                 };
             });
-            this.emitChange();
-        },
-        "PARTENAIRES_UPDATE_SUCCESS": function (partenaire) {
-            logger.debug("PARTENAIRES_UPDATE_SUCCESS, maj du partenaire:", partenaire);
-            var index = _.findIndex(this.results.items, {'id': partenaire.id});
-            if (index != -1) {
-                this.results.items[index] = partenaire;
-            } else {
-                [partenaire].concat(this.results.items);
-            }
             this.emitChange();
         }
     };
@@ -114,13 +91,13 @@ class FichePartenaireStore extends BaseStore {
 
         var webPartenaire:any = _.assign({}, partenaire);
 
-        //newforms ne prend pas en compte les objets complexes, il faut mettre à plat les objets
+        // newforms ne prend pas en compte les objets complexes, il faut mettre à plat les objets
         webPartenaire.civilite = this._transformToId(partenaire, "civilite");
         webPartenaire.pays = this._transformToId(partenaire, "pays");
 
         if (webPartenaire.ville) {
             webPartenaire.pays = this._transformToId(partenaire.ville, "pays");
-            //webPartenaire.ville.pays = undefined; //supprimé pour ne pas permettre d'ambiguité
+            // webPartenaire.ville.pays = undefined; //supprimé pour ne pas permettre d'ambiguité
         }
 
         if (partenaire.photo) {
@@ -131,11 +108,11 @@ class FichePartenaireStore extends BaseStore {
 
         }
 
-        webPartenaire.ville = this._transformToId(partenaire, 'ville');
+        webPartenaire.ville = this._transformToId(partenaire, "ville");
 
         if (partenaire.nationalite) {
             webPartenaire.nationalite = partenaire.nationalite.id;
-            //Pour faire fonctionner l'auto-complete
+            // Pour faire fonctionner l'auto-complete
             webPartenaire.nationalite$text = partenaire.nationalite.nationalite;
         }
 
@@ -143,8 +120,7 @@ class FichePartenaireStore extends BaseStore {
             webPartenaire.satisfaction = JSON.parse(partenaire.satisfaction);
         }
 
-        //todo mettre constantes
-        webPartenaire.isClient = partenaire.isClient == true;
+        webPartenaire.isClient = partenaire.isClient === true;
         return webPartenaire;
     }
 
@@ -176,7 +152,7 @@ class FichePartenaireStore extends BaseStore {
         if (idPays) {
             return this.villes.filter(function (ville) {
                 // == Pour avoir la coercition de type (int / string)
-                if (ville.pays && ville.pays.id == idPays) {
+                if (ville.pays && ville.pays.id === idPays) {
                     return true;
                 }
                 return false;
@@ -186,10 +162,10 @@ class FichePartenaireStore extends BaseStore {
         }
     }
 
-    getVilles():Array<any>  {
+    getVilles():Array<any> {
         return this.villes;
     }
-    
+
     getListeProduits():Array<any> {
         return this.produits;
     }

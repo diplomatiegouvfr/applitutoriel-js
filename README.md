@@ -66,8 +66,8 @@ se fasse via ce dernier.
 
 ## Vérification
 
-L'application est accessible depuis un navigateur à l'addresse : `http://localhost:8888/applitutoriel-5.0.0/`
-où __applitutoriel-5.0.0__ correspond au `contextPath` dans le fichier `config/default.json`.
+L'application est accessible depuis un navigateur à l'addresse : `http://localhost:8888/applitutoriel/`
+où __applitutoriel__ correspond au `contextPath` dans le fichier `config/default.json`.
 
 ## Mode Mock
 
@@ -90,8 +90,8 @@ $ hb package
 
 Les livrables sont à récupérer dans le répertoire : `target`
 
-- `applitutoriel-5.0.0-static.zip`
-- `applitutoriel-5.0.0-dynamic.zip`
+- `applitutoriel-5.0.X-static.zip`
+- `applitutoriel-5.0.X-dynamic.zip`
 
 ## Fichier de configuration de l'application : default.json
 
@@ -109,15 +109,13 @@ Ce fichier ne doit pas être modifié, excepté pour le log console. Les modific
 
 ```json
 {
-  "contextPath": "applitutoriel-5.0.0",
+  "contextPath": "applitutoriel",
   "welcomePage": "/accueil",
   "themeHost": "http://localhost:7777",
-  "themeUrl": "${themeHost}/5.0.0/intranet"
+  "themeUrl": "${themeHost}/5.0.X/default"
   ...
 }
-
 ```
-
 
 ### Configuration serveur
 
@@ -390,17 +388,25 @@ Type Ajax :
 
 ### Configuration des services
 
+Configuration de l'adresse du service par défaut
++ possibilité de définir des adresses supplémentaires pour gérer le multi-services.
 
 | Paramètre | Description | Valeur |
 |-----------|-------------|--------|
-|services.host| URL de déploiement du module applitutoriel-service| [Protocol]://[host]:[port] |
-|services.name| Nom de déploiement des services|applitutoriel|
+|defaultServices.host| URL de déploiement du module applitutoriel-service| [Protocol]://[host]:[port] |
+|defaultServices.name| Nom de déploiement des services|applitutoriel|
+|secteursServices.host| URL de déploiement d'un service supplémentaire| [Protocol]://[host]:[port] |
+|secteursServices.name| Nom de déploiement d'un service supplémentaire|applitutoriel|
 
 ```json
-  "services": {
-    "host": "http://localhost:8080/",
-    "name": "applitutoriel-service"
-  },
+    "defaultServices": {
+      "host": "http://localhost:8080/",
+      "name": "applitutoriel-service"
+    },
+    "secteursServices": { // configuration multi-service : exemple de definition d'un service specifique pour les secteurs
+      "host": "http://localhost:8080/",
+      "name": "applitutoriel-service"
+    },
 ```
 
 ### Mode mock
@@ -408,14 +414,22 @@ Type Ajax :
 | Paramètre | Description | Valeur |
 |-----------|-------------|--------|
 |enabled|Activation du mode mock de l'application|false|
-|host|Host local du mock|localhost|
 |routes|Chemin vers le fichier de routes mocké sans le /src |/mock/routes|
+|defaultServices.host|Host local du mock|localhost|
+|secteursServices.host| URL de déploiement d'un service mock supplémentaire| [Protocol]://[host]:[port] |
+|secteursServices.name| Nom de déploiement d'un service mock supplémentaire|applitutoriel/hornet-mock|
 
 ```json
   "mock": {
-    "enabled": false,
-    "host": "127.0.0.1", //default localhost
-    "routes": "/mock/routes"
+      "enabled": false,
+      "routes": "/mock/routes",
+      "defaultServices": { // service mock par defaut : le contexte est toujours "applitutoriel/hornet-mock"
+        "host": "http://localhost:${server.port}/" //default localhost:8888
+      },
+      "secteursServices": { // configuration multi-service : exemple de definition d'un mock specifique pour les secteurs
+        "host": "http://localhost:${server.port}/",
+        "name": "applitutoriel/hornet-mock"
+      }
   }
 ```
 
@@ -428,12 +442,14 @@ NOTE : Le mode fullSPA n'est pas encore complètement supporté par hornet, la c
 |enabled|Activation du mode fullSPA|false|
 |host|Host du mode fullSPA|""|
 |name|nom du service pour le mode fullSPA|/services|
+|staticPath|prefixe des resources statiques pour le mode fullSPA|""|
 
 ```json
 "fullSpa": {
     "enabled": false,
     "host": "",
-    "name": "/services"
+    "name": "/services",
+    "staticPath": ""
   }
 ```
 
@@ -441,17 +457,39 @@ __NOTE__ : non opérationnel
 
 ### Configuration de l'authentification
 
-Note : Il ne s'agit pas d'une configuration à proprement parlé de Hornet mais uniqument viable dans l'applitutoriel
+Note : Il ne s'agit pas d'une configuration à proprement parler de Hornet mais uniquement viable dans l'applitutoriel
 
 | Paramètre | Description | Valeur |
 |-----------|-------------|--------|
 |loginUrl|Url de connexion à l'application|/login|
 |logoutUrl|Url de déconnexion à l'application|/logout|
+|cas.enabled|Activation du mode CAS|false|
+|cas.configuration.urlCas|url complète du CAS||
+|cas.configuration.hostUrlReturnTo|url de retour après authentification sur le CAS||
+|cas.configuration.paths.login|url déclenchant le process de connexion|/login|
+|cas.configuration.paths.logout|url déclenchant le process de déconnexion|/logout|
+|cas.configuration.paths.validate|url du service de validation des tichets CAS||
+|cas.configuration.paths.casLogin|url de connexion du CAS||
+|cas.configuration.paths.casLogout|url de déconnexion du CAS||
 
 ```json
   "authentication": {
     "loginUrl": "/login",
     "logoutUrl": "/logout"
+    "cas": {
+      "enabled": true,
+      "configuration": {
+        "urlCas": "http://cas-url:80",
+        "hostUrlReturnTo": "http://localhost:8888",
+        "paths": {
+          "login": "/login",
+          "logout": "/logout",
+          "validate": "http://cas-url/serviceValidate",
+          "casLogin": "http://cas-url/login",
+          "casLogout": "http://cas-url/logout"
+        }
+      }
+    }
   }
 ```
 
@@ -468,3 +506,9 @@ Note : Il ne s'agit pas d'une configuration à proprement parlé de Hornet mais 
     "timetolive": 60
   }
 ```
+
+## Licence
+
+`applitutoriel-service` est sous [licence cecill 2.1](./LICENSE.md).
+
+Site web : [http://www.cecill.info](http://www.cecill.info/licences/Licence_CeCILL_V2.1-en.html)

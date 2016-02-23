@@ -1,10 +1,9 @@
-///<reference path="../../../node_modules/app/hornet-js-ts-typings/definition.d.ts"/>
 "use strict";
+
 import ApplitutorielServiceApi = require("src/services/applitutoriel-service-api");
 import ActionsChainData = require("hornet-js-core/src/routes/actions-chain-data");
 import utils = require("hornet-js-utils");
 import ExtendedPromise = require("hornet-js-utils/src/promise-api");
-import Promise = require("bluebird");
 import MediaType = require("hornet-js-core/src/protocol/media-type");
 import Photo = require("hornet-js-core/src/data/file");
 
@@ -56,17 +55,12 @@ class PartenaireApi extends ApplitutorielServiceApi {
 
     supprimer(id) {
         logger.info("SERVICES - supprimer : ", id);
-        return new ExtendedPromise((resolve:(n: ActionsChainData) => void, reject) => {
+        return new ExtendedPromise((resolve:(n:ActionsChainData) => void, reject) => {
             if (!_.isNumber(parseInt(id))) {
                 reject(new WError(this.actionContext.formatMsg(this.actionContext.i18n("error.message.ER-PA-FPA-09"), {"id": id})));
             }
 
-            var path = urlPartenaire;
-            if (utils.isServer) {
-                path = path + "/" + id;
-            } else {
-                path = path + "/supprimer/" + id;
-            }
+            var path = urlPartenaire + "/supprimer/" + id;
 
             this.request()
                 .del(this.buildUrl(path)) //
@@ -77,25 +71,17 @@ class PartenaireApi extends ApplitutorielServiceApi {
 
     supprimerEnMasse(items) {
         logger.info("SERVICES - supprimerEnMasse :", items);
-        var ids = [];
-        if (utils.isServer) {
-            items.map(function (item) {
-                ids.push(item.id);
-            });
-        }
-        else {
-            ids = items;
-        }
 
-        return new ExtendedPromise((resolve:(n: ActionsChainData) => void, reject) => {
+        return new ExtendedPromise((resolve:(n:ActionsChainData) => void, reject) => {
             var path = urlPartenaire + "/suppression";
-            logger.debug("Envoi d'une liste d'identifiants de partenaires à supprimer :", ids);
+            logger.debug("Envoi d'une liste de partenaires à supprimer :", items);
             this.request()
                 .post(this.buildUrl(path))
-                .send(ids) //
+                .send(items) //
                 .end(this.endFunction(resolve, reject,
                     "Suppression en masse de partenaires"));
         });
     }
 }
+
 export = PartenaireApi;

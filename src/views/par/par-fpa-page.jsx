@@ -47,12 +47,20 @@ var FichePartenaires = React.createClass({
         var champVille = this.state.form.fields.ville;
 
         var listeVilles = [{id: 0, libelle: this.i18n("partenaireFichePage.form.aucune")}];
-        var listeVillesStore = partenaireStore.getListeVille(this.state.form.data.pays);
+        var listeVillesStore = partenaireStore.getListeVille(parseInt(this.state.form.data.pays));
         if(listeVillesStore) {
             listeVilles = listeVilles.concat(listeVillesStore);
         }
         var choices = newforms.util.makeChoices(listeVilles, "id", "libelle");
         champVille.setChoices(choices);
+
+        this.state.villeReadOnly = (choices.length <= 1);
+        if(this.state.villeReadOnly) {
+            /* Le champ ville va passer en lecture seule :
+              la valeur qui lui sera affectée sera récupéré depuis form.initial que l'on met donc à jour */
+            this.state.form.initial.ville = choices[0][0];
+        }
+
         var updatedData;
         try {
             champVille.clean(villeSelectionnee);
@@ -62,6 +70,7 @@ var FichePartenaires = React.createClass({
             on sélectionne donc par défaut la première ville de la nouvelle liste */
             updatedData = {ville: choices[0][0]};
         }
+
         /* On s'assure que l'état de validation du formulaire est à jour pour le champ ville */
         this.state.form.updateData(updatedData);
         /* Force le rendu React, car l'état interne du formulaire a changé, mais pas l'état du composant page */
@@ -85,17 +94,22 @@ var FichePartenaires = React.createClass({
         } else {
             //mode consultation
         }
+
         var intlMess = this.i18n("partenaireFichePage");
+        var form = this._initNewForm(isModeCreation, intlMess.form);
+        var villeReadOnly = !form.fields.ville.choices() || form.fields.ville.choices().length <= 1;
 
         return {
             i18n: intlMess,
+            creationMode: isModeCreation,
             readOnly: isModeReadOnly,
-            form: this._initNewForm(isModeCreation, intlMess.form),
+            villeReadOnly: villeReadOnly,
+            form: form,
             lastPays: partenaireData && partenaireData.pays,
+            lastIsVIP: partenaireData && partenaireData.isVIP,
             urlAction: urlAction
         }
     },
-
 
     /**
      * Fonction appelée lorsque l'état de validation du formulaire change.
@@ -112,8 +126,19 @@ var FichePartenaires = React.createClass({
                 this.executeAction(new FichePartenairesAction.ListerVillesParPays().action(), {"id": nouveauPays});
             }
         }
+
         /* Force le rendu React, car l'état interne de validation du formulaire a changé, mais pas l'état du composant page */
         this.forceUpdate();
+    },
+
+    /**
+     * Indique si les autres champs que les coordonnées doivent être en lecture seule :
+     * - partenaire VIP : sauf en création, seules les coordonnées sont modifiables
+     * - partenaire non VIP : toute la fiche est modifiable
+     * @return {boolean} true lorsque seules les coordonnées doivent être modifiables
+     */
+    _editContactOnly: function() {
+        return this.state.form.data.isVIP && !this.state.creationMode;
     },
 
     render: function () {
@@ -130,23 +155,23 @@ var FichePartenaires = React.createClass({
                 <div className="pure-u-1">
                     <h2>{titre}</h2>
                     <Notification />
-                    <HornetForm
-                        form={this.state.form}
-                        action={this.state.urlAction}
-                        buttons={this._getFormButtons(this.state.readOnly)}
-                        onSubmit={this._onSubmit}
-                        readOnly={this.state.readOnly}
-                        formClassName=""
-                    >
-
-                        <Onglets selectedTabIndex={0}>
-                            <Onglet title={this.state.i18n.ongletIdentiteTitre}>
+                    <Onglets selectedTabIndex={0}>
+                        <Onglet title={this.state.i18n.ongletIdentiteTitre}>
+                            <HornetForm
+                                form={this.state.form}
+                                buttons={this._getFormButtons(this.state.readOnly)}
+                                onSubmit={this._onSubmit}
+                                readOnly={this.state.readOnly}
+                                formClassName=""
+                            >
                                 <FieldSet name={this.state.i18n.form.type}>
                                     <Row>
+                                        {/* Exemple d'application de la propriété readOnly directement sur un champ */}
                                         {this.state.readOnly ? <Field name="isClient"/> :
-                                        <Field name="isClient"
-                                               labelClass="pure-u-1-2 blocLabelUp"
-                                        />}
+                                            <Field name="isClient"
+                                                   labelClass="pure-u-1-2 blocLabelUp"
+                                                   readOnly={this._editContactOnly()}
+                                            />}
                                         <Field name="isVIP"
                                                toolTip={this.state.i18n.form.fields.isVIP.tooltip}
                                                abbr={this.state.i18n.form.fields.isVIP.title}
@@ -156,18 +181,19 @@ var FichePartenaires = React.createClass({
                                 </FieldSet>
 
                                 <FieldSet name={this.state.i18n.form.civilite}>
-                                    <Row>
+                                    {/* Exemple d'application de la propriété readOnly sur une ligne */}
+                                    <Row readOnly={this._editContactOnly()}>
                                         <Field groupClass="pure-u-1-2" name="civilite"/>
                                     </Row>
-                                    <Row>
+                                    <Row readOnly={this._editContactOnly()}>
                                         <Field name="nom"/>
                                         <Field name="nomLocal"/>
                                     </Row>
-                                    <Row>
+                                    <Row readOnly={this._editContactOnly()}>
                                         <Field name="prenom"/>
                                         <Field name="prenomLocal"/>
                                     </Row>
-                                    <Row>
+                                    <Row readOnly={this._editContactOnly()}>
                                         <Field groupClass="pure-u-1-2" name="nationalite"/>
                                     </Row>
                                 </FieldSet>
@@ -199,10 +225,12 @@ var FichePartenaires = React.createClass({
                                     </Row>
                                     <Row>
                                         <Field name="pays"/>
-                                        <Field name="ville"/>
+                                        {/* Modification dynamique de la propriété readOnly selon la sélection du pays */}
+                                        <Field name="ville" readOnly={this.state.villeReadOnly}/>
                                     </Row>
                                 </FieldSet>
-                                <FieldSet name={this.state.i18n.form.sectionCoordAssistance}>
+                                {/* Exemple d'application de la propriété readOnly sur un ensemble de champs */}
+                                <FieldSet name={this.state.i18n.form.sectionCoordAssistance} readOnly={this._editContactOnly()}>
                                     <Row>
                                         <Field name="assistNom"/>
                                         <Field name="assistPrenom"/>
@@ -214,21 +242,23 @@ var FichePartenaires = React.createClass({
                                         <Field labelClass="pure-u-1-4" name="assistCourriel"/>
                                     </Row>
                                 </FieldSet>
-                                <FieldSet name={this.state.i18n.form.sectionDivers}>
-                                    <Field labelClass="pure-u-1-4 blocLabelUp" name="commentaire"/>
-                                    <Field labelClass="pure-u-1-4" name="photo"/>
+                                {/* Exemple d'application de la propriété readOnly avec valeurs contradictoires entre
+                                 l'élément parent et les éléments enfants : lorsque le parent est à true, cette valeur est appliquée même
+                                 si les enfants ont readOnly à false */}
+                                <FieldSet name={this.state.i18n.form.sectionDivers} readOnly={this._editContactOnly()}>
+                                    <Field labelClass="pure-u-1-4 blocLabelUp" name="commentaire" readOnly={false}/>
+                                    <Field labelClass="pure-u-1-4" name="photo" readOnly={false}/>
                                 </FieldSet>
-                                <FieldSet name="Satisfaction client">
+                                <FieldSet name="Satisfaction client" readOnly={this._editContactOnly()}>
                                     <Row>
                                         <Field labelClass="pure-u-1-4 blocLabelUp" name="satisfaction"/>
                                     </Row>
                                 </FieldSet>
-
-                            </Onglet>
-                            <Onglet title={this.state.i18n.ongletListeProduitTitre}>
-                                <p>{this.state.i18n.ongletListeProduitContenu}</p></Onglet>
-                        </Onglets>
-                    </HornetForm>
+                            </HornetForm>
+                        </Onglet>
+                        <Onglet title={this.state.i18n.ongletListeProduitTitre}>
+                            <p>{this.state.i18n.ongletListeProduitContenu}</p></Onglet>
+                    </Onglets>
 
                 </div>
             )
@@ -297,7 +327,7 @@ var FichePartenaires = React.createClass({
     /** Annulation : retour à l"écran de recherche de partenaires */
     _onCancel: function () {
         logger.info("Retour écran de recherche de partenaires");
-        window.routeur.setRoute(this.genUrl("/partenaires/cancel"));
+        window.routeur.setRoute(this.genUrl("/partenaires"));
     },
 
     /**
@@ -323,12 +353,15 @@ var FichePartenaires = React.createClass({
             onChange: this.onFormChange,
             autoId: "id_for_PartenaireFichePage",
             data: defaultData,
-            validation: "manual"
+            validation: "manual",
+            /* L'attribut controlled doit être à true pour un rendu correct car certains champs
+             sont modifiés programmatiquement lors d'un passage dynamique en lecture/modification */
+            controlled: true
         });
 
         // Affiche les villes du pays sélectionné (restreint la liste)
         if (defaultData && !_.isUndefined(defaultData.pays)) {
-            var storeListeVilles = partenaireStore.getListeVille(defaultData.pays);
+            var storeListeVilles = partenaireStore.getListeVille(parseInt(defaultData.pays));
             if (storeListeVilles && storeListeVilles.length <= 0) {
                 this.executeAction(new FichePartenairesAction.ListerVillesParPays().action(), {"id": defaultData.pays});
             }

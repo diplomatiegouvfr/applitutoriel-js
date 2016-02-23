@@ -1,18 +1,28 @@
 {
+  "themeUrl": "http://localhost:7777/5.0.1/default",
+  "fullSpa": {
+    "enabled": true,
+    "host": "http://localhost:8080/",
+    "name": "applitutoriel-service",
+    "secteurs": {
+      "host": "http://localhost:8080/",
+      "name": "applitutoriel-service"
+    },
+    "staticPath": ""
+  },
   "dispatcher": {
     "stores": {
       "PageInformationStore": {
-        "themeUrl": "http://localhost:7777/5.0.0/default",
         "currentUser": {
           "name": "admin",
           "roles": [
             {
               "id": 1,
-              "nom": "AppliTuto_ADMIN"
+              "name": "AppliTuto_ADMIN"
             },
             {
               "id": 2,
-              "nom": "AppliTuto_USER"
+              "name": "AppliTuto_USER"
             }
           ]
         }
@@ -22,15 +32,15 @@
       }
     }
   },
-  "contextPath": "applitutoriel-spa",
-  "fullspa": {
-    "enabled": false,
-    "host": "",
-    "name": "services"
-  },
-  "services": {
-    "host": "http://localhost:8888/",
-    "name": "mock"
-  },
-  "locale": "fr-FR"
+  "locale": "fr-FR",
+  "mode": "development",
+  "AppSharedProps": {
+    "appName": "applitutoriel",
+    "appVersion": "5.0.1",
+    "appDescription": "Application tutoriel utilisant le Framework hornet",
+    "appAuthor": "MAEDI",
+    "loginUrl": "/login",
+    "logoutUrl": "/logout",
+    "welcomePageUrl": "/accueil"
+  }
 }

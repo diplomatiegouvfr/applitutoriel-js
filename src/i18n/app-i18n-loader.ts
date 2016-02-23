@@ -1,4 +1,3 @@
-///<reference path="../../node_modules/app/hornet-js-ts-typings/definition.d.ts"/>
 "use strict";
 import I18nLoader = require("hornet-js-core/src/i18n/i18n-loader");
 

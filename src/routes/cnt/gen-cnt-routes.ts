@@ -1,4 +1,3 @@
-///<reference path="../../../node_modules/app/hornet-js-ts-typings/definition.d.ts"/>
 "use strict";
 import IRoutes = require("hornet-js-core/src/routes/router-interfaces");
 import utils = require("hornet-js-utils");
@@ -7,7 +6,7 @@ import fvaNS = require("hornet-js-core/src/actions/form-validation-action");
 import actionsContact = require("src/actions/cnt/gen-cnt-actions");
 import ContactForm = require("src/views/cnt/gen-cnt-form");
 import Roles = require("src/utils/roles");
-var contactPage = require("src/views/cnt/gen-cnt-page");
+import contactPage = require("src/views/cnt/gen-cnt-page");
 
 var logger = utils.getLogger("applitutoriel.routes.gen.ren-cnt-routes");
 
@@ -24,7 +23,7 @@ class ContactRoutes implements IRoutes.IRoutesBuilder {
         });
     }
 
-    buildDataRoutes(match:IRoutes.MatchDataFn){
+    buildDataRoutes(match:IRoutes.MatchDataFn) {
 
         logger.info("Initialisation des routes data de la page Contact");
 
@@ -42,4 +41,5 @@ class ContactRoutes implements IRoutes.IRoutesBuilder {
         }, "post");
     }
 }
+
 export = ContactRoutes;

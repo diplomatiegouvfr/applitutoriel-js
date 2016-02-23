@@ -1,4 +1,3 @@
-///<reference path="../../../node_modules/app/hornet-js-ts-typings/definition.d.ts"/>
 "use strict";
 import ApplitutorielServiceApi = require("src/services/applitutoriel-service-api");
 import ActionsChainData = require("hornet-js-core/src/routes/actions-chain-data");
@@ -7,7 +6,6 @@ import Photo = require("hornet-js-core/src/data/file");
 
 import utils = require("hornet-js-utils");
 import ExtendedPromise = require("hornet-js-utils/src/promise-api");
-import MediaType = require("hornet-js-core/src/protocol/media-type");
 
 var logger = utils.getLogger("applitutoriel.services.par.par-fpa-api");
 var WError = utils.werror;
@@ -19,14 +17,11 @@ var urlPhoto = urlPartenaire + "/photo";
 class FichePartenaireApi extends ApplitutorielServiceApi {
     charger(id, mode:string) {
         logger.info("SERVICES - charger : ", id, mode);
-        return new ExtendedPromise((resolve:(n: ActionsChainData) => void, reject) => {
+        return new ExtendedPromise((resolve:(n:ActionsChainData) => void, reject) => {
             if (!_.isNumber(parseInt(id))) {
                 reject(new WError(this.actionContext.formatMsg(this.actionContext.i18n("error.message.ER-PA-FPA-09"), {"id": id})));
             }
-            var path = "/partenaires";
-            if (!utils.isServer) {
-                path = path + "/" + mode;
-            }
+            var path = "/partenaires/" + mode;
 
             this.request()
                 .get(this.buildUrl(path + "/" + id)) //
@@ -40,14 +35,14 @@ class FichePartenaireApi extends ApplitutorielServiceApi {
 
         if (id && utils.isServer) {
 
-            return new ExtendedPromise((resolve:(n: ActionsChainData) => void, reject) => {
+            return new ExtendedPromise((resolve:(n:ActionsChainData) => void, reject) => {
                 if (!_.isNumber(parseInt(id))) {
                     reject(new WError(this.actionContext.formatMsg(this.actionContext.i18n("error.message.ER-PA-FPA-09"), {"id": id})));
                 }
                 logger.debug("Envoi d'une mise à jour de partenaire : ", partenaire);
 
                 this.request()
-                    .put(this.buildUrl(urlPartenaire + "/" + id)) //
+                    .put(this.buildUrl(urlPartenaire + "/sauvegarder/" + id)) //
                     .send(this.convertToRemotePartenaire(partenaire)) //
                     .end(this.endFunction(resolve, reject
                         , "Modification partenaire d'id " + id));
@@ -55,28 +50,33 @@ class FichePartenaireApi extends ApplitutorielServiceApi {
         } else {
 
             var sendPart = partenaire;
-            return new ExtendedPromise((resolve:(n: ActionsChainData) => void, reject) => {
+            return new ExtendedPromise((resolve:(n:ActionsChainData) => void, reject) => {
                 logger.debug("Envoi d'une creation de partenaire : ", partenaire);
+                var path = "/partenaires/sauvegarder";
 
-                var path = "/partenaires";
-                if (!utils.isServer) {
-                    path = path + "/sauvegarder";
-                }
-
+                // ajout = POST
+                var request = this.request().post(this.buildUrl(path));
                 if (id) {
-                    path = path + "/" + id; //en modification
+                    path = path + "/" + id; // en modification
+                    // modif = PUT
+                    request = this.request().put(this.buildUrl(path));
                 }//else en création
 
-                var request = this.request().post(this.buildUrl(path));
 
                 if (utils.isServer) {
-                    //On est sur NodeJS et on envoi vers le backend, on encode donc la photo en JSON et on POST de manière "classique"
+                    // On est sur NodeJS et on envoi vers le backend, on encode donc la photo en JSON et on POST de manière "classique"
                     sendPart = this.convertToRemotePartenaire(partenaire);
                     request.send(sendPart);
                 } else {
                     // On est sur le browser, on va encoder le POST en multipart et transférer le corps en JSON et l"image dans un "part" séparé
                     request.field("content", JSON.stringify(sendPart));
-                    if (sendPart.photo) {
+                    if (sendPart.photo && sendPart.photo instanceof File) {
+                        // mantis 55104
+                        // L'objet photo est de type "File" seulement
+                        // quand un fichier est a été uploadé dans le formulaire et transmis dans la requête
+                        // Si ce n'est pas un fichier, on peut l'ignorer (cela signifie que la photo n'a pas changé)
+                        // De plus, si on essaye quand même de l'attacher dans la requête alors que ce n'est pas un fichier,
+                        // firefox plante (Argument 2 of FormData.append does not implement interface Blob)
                         request.attach("photo", sendPart.photo, sendPart.photo.name);
                     }
                 }
@@ -87,12 +87,12 @@ class FichePartenaireApi extends ApplitutorielServiceApi {
 
     lirePhoto(idPhoto) {
         logger.info("SERVICES - lirePhoto : ", idPhoto);
-        return new ExtendedPromise((resolve:(n: ActionsChainData) => void, reject) => {
+        return new ExtendedPromise((resolve:(n:ActionsChainData) => void, reject) => {
             this.request()
                 .get(this.buildUrl(urlPhoto + "/" + idPhoto)) //
                 .end(function (err, res) {
                     if (res && res.ok && res.body) {
-                        //création d"un objet Image pour que le router sache qu"il foit renvoyer un
+                        // création d"un objet Image pour que le router sache qu"il foit renvoyer un
                         var photo = new Photo();
                         photo.buffer = res.body.buffer;
                         photo.id = res.body.id;
@@ -123,7 +123,7 @@ class FichePartenaireApi extends ApplitutorielServiceApi {
 
     convertToRemotePartenaire(webPartenaire) {
 
-        var remotePartenaire:any =_.assign({}, webPartenaire);
+        var remotePartenaire:any = _.assign({}, webPartenaire);
 
         remotePartenaire.civilite = {id: webPartenaire.civilite};
         remotePartenaire.pays = {id: webPartenaire.pays};
@@ -151,4 +151,5 @@ class FichePartenaireApi extends ApplitutorielServiceApi {
         return remotePartenaire;
     }
 }
+
 export = FichePartenaireApi;

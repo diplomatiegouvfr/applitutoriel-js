@@ -1,35 +1,38 @@
-///<reference path='./node_modules/app/hornet-js-ts-typings/definition.d.ts'/>
 "use strict";
 
 // Bootstrap de lancement de l'application
 // permet la résolution de modules dans des répertoires autres que "node_modules"
-var Module = require('module').Module;
-var fs = require('fs');
-var path = require('path');
+var Module = require("module").Module;
+var fs = require("fs");
+var path = require("path");
 
 var appDirectory = process.cwd();
 var moduleDirectoriesContainer = [];
 var moduleDirectories = [];
-var old_nodeModulePaths = Module._nodeModulePaths;
+// On conserve la méthode originale pour rétablir le fonctionnement normal en cas d'un requireGlobal
+Module._oldNodeModulePaths = Module._nodeModulePaths;
 
-var NODE_MODULES_APP = path.join('node_modules', 'app');
+var NODE_MODULES_APP = path.join("node_modules", "app");
 
 
 // on surcharge la méthode de résolution interne nodejs pour gérer d'autres répertoires
-Module._nodeModulePaths = function(from) {
-    var paths = [];//old_nodeModulePaths.call(this, from);
+Module._newNodeModulePaths = function (from) {
+    var paths = [];
     var matched = matchModuleDirectory(from);
 
-    moduleDirectoriesContainer.forEach((path) => { paths.push(path); });
+    moduleDirectoriesContainer.forEach((path) => {
+        paths.push(path);
+    });
     paths.push(path.join(appDirectory, NODE_MODULES_APP));
     paths.push(path.join(matched || appDirectory));
 
     return paths;
 };
+Module._nodeModulePaths = Module._newNodeModulePaths;
 
 function matchModuleDirectory(from) {
     var match = null, len = 0;
-    for (var i=0;i<moduleDirectories.length;i++) {
+    for (var i = 0; i < moduleDirectories.length; i++) {
         var mod = moduleDirectories[i];
         if (from.indexOf(mod) === 0 && mod.length > len) {
             match = mod;
@@ -57,7 +60,7 @@ function isNodeModule(directory) {
     // si un fichier 'package.json' existe, c'est un module nodejs
     var isModule = false;
     try {
-        var stat = fs.statSync(path.normalize(path.join(directory, 'package.json')));
+        fs.statSync(path.normalize(path.join(directory, "package.json")));
         isModule = true;
     } catch (e) {
         isModule = false;
@@ -67,10 +70,10 @@ function isNodeModule(directory) {
 
 // Lecture et ajout dans le resolver des répertoires externes déclarés par le package courant
 try {
-    var builder = require('./builder.js');
+    var builder = require("./builder.js");
     if (builder.externalModules && builder.externalModules.enabled && builder.externalModules.directories && builder.externalModules.directories.length > 0) {
 
-        builder.externalModules.directories.forEach(function(directory) {
+        builder.externalModules.directories.forEach(function (directory) {
             try {
                 var stat = fs.statSync(directory);
                 if (stat.isDirectory()) {
@@ -82,29 +85,27 @@ try {
                         console.log("MODULE RESOLVER > le répertoire '" + (path.normalize(path.join(directory, ".."))) + "' est déclaré comme container de module nodejs");
 
                     }
-                    //} else {
-                        // on vérifie si des répertoires du 1er niveau sont des modules nodejs pour les ajouter eux aussi
-                        var files = fs.readdirSync(directory);
-                        var moduleFound = false;
-                        files.forEach(function (file) {
-                            var modPath = path.normalize(path.join(directory, file));
-                            if (fs.statSync(modPath).isDirectory(modPath)) {
-                                if (file.indexOf(".") == 0) return;
+                    // on vérifie si des répertoires du 1er niveau sont des modules nodejs pour les ajouter eux aussi
+                    var files = fs.readdirSync(directory);
+                    var moduleFound = false;
+                    files.forEach(function (file) {
+                        var modPath = path.normalize(path.join(directory, file));
+                        if (fs.statSync(modPath).isDirectory(modPath)) {
+                            if (file.indexOf(".") === 0) return;
 
-                                if (isNodeModule(modPath)) {
-                                    addModuleDirectory(modPath);
-                                    moduleFound = true;
-                                    console.log("MODULE RESOLVER > le répertoire '" + modPath + "' est déclaré comme module nodejs");
-                                } else {
-                                    console.log("MODULE RESOLVER > le répertoire '" + modPath + "' est ignoré car ce n'est pas un module nodejs")
-                                }
+                            if (isNodeModule(modPath)) {
+                                addModuleDirectory(modPath);
+                                moduleFound = true;
+                                console.log("MODULE RESOLVER > le répertoire '" + modPath + "' est déclaré comme module nodejs");
+                            } else {
+                                console.log("MODULE RESOLVER > le répertoire '" + modPath + "' est ignoré car ce n'est pas un module nodejs")
                             }
-                        });
-                        if (moduleFound) {
-                            console.log("MODULE RESOLVER > le répertoire '" + directory + "' est déclaré comme container de module nodejs");
-                            addModuleDirectoryContainer(directory);
                         }
-                    //}
+                    });
+                    if (moduleFound) {
+                        console.log("MODULE RESOLVER > le répertoire '" + directory + "' est déclaré comme container de module nodejs");
+                        addModuleDirectoryContainer(directory);
+                    }
                 }
             } catch (e) {
                 console.log("MODULE RESOLVER > erreur lors de la déclaration du répertoire externe '" + directory + "' :", e);
@@ -112,7 +113,7 @@ try {
             }
         });
     }
-} catch(e) {
+} catch (e) {
     // pas de fichier 'builder.js' >> mode production
     // on ignore en silence
 }
@@ -120,18 +121,29 @@ try {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Gestion du cas particulier du main (car nodejs le considère différent des autres modules ...)  //
 require.main.paths = [];
-moduleDirectoriesContainer.forEach((path) => { require.main.paths.push(path); });
+moduleDirectoriesContainer.forEach((path) => {
+    require.main.paths.push(path);
+});
 require.main.paths.push(path.join(process.cwd()));
 require.main.paths.push(path.join(process.cwd(), NODE_MODULES_APP));
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// gestion des sourcemap dans les stack nodejs
+require("source-map-support").install();
+
+// autorise le format json5 dans les extensions .json
+require("hornet-js-utils/src/json-loader").allowJSON5();
+
+// auto configuration des logs server
+require("hornet-js-core/src/log/server-log-configurator");
+
 // initialisation des infos de l'application courante
 import AppSharedProps = require("hornet-js-utils/src/app-shared-props");
-var packageJson = require('./package');
+var packageJson = require("./package");
 AppSharedProps.set("appName", packageJson.name);
 AppSharedProps.set("appVersion", packageJson.version);
 AppSharedProps.set("appDescription", packageJson.description);
 AppSharedProps.set("appAuthor", packageJson.author);
 
 // lancement de l'application
-require('src/server');
+require("src/server");

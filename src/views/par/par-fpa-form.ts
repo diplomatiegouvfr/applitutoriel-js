@@ -1,11 +1,10 @@
-///<reference path="../../../node_modules/app/hornet-js-ts-typings/definition.d.ts"/>
 "use strict";
 import newforms = require("newforms");
 import FichePartenaireStore = require("src/stores/par/par-fpa-store");
-var AutoCompleteField = require("hornet-js-components/src/auto-complete/auto-complete-field");
-var FileField = require("hornet-js-components/src/upload-file/upload-file-field");
-var utils = require("hornet-js-utils");
-//on accepte les chiffre et "+" ")"  et "(" à n"impoprte quelle place
+var HornetAutoCompleteField = require("hornet-js-components/src/auto-complete/auto-complete-field");
+var HornetUploadFileField = require("hornet-js-components/src/upload-file/upload-file-field");
+
+// on accepte les chiffre et "+" ")"  et "(" à n"impoprte quelle place
 var regexTelephone = "^([0-9]|\\(|\\)|\\+)*$";
 
 var FichePartenaireForm = function (partenaireStore:any, intlMessages:any) {
@@ -55,7 +54,10 @@ var FichePartenaireForm = function (partenaireStore:any, intlMessages:any) {
                 useReadOnlyWidget: true
             },
             required: false,
-            label: intlMessages.fields.isVIP.label
+            label: intlMessages.fields.isVIP.label,
+            /* Validation automatique pour ce champ, car il doit déclencher le passage en lecture seule
+              d'une partie des autres champs */
+            validation: "auto"
         }),
         civilite: newforms.ChoiceField({
             custom: {
@@ -104,7 +106,7 @@ var FichePartenaireForm = function (partenaireStore:any, intlMessages:any) {
             required: false,
             maxLength: 50
         }),
-        nationalite: AutoCompleteField({
+        nationalite: HornetAutoCompleteField({
             store: {
                 class: FichePartenaireStore,
                 functionName: "getListeNationalites"
@@ -213,6 +215,8 @@ var FichePartenaireForm = function (partenaireStore:any, intlMessages:any) {
             errorMessages: {
                 required: intlMessages.fields.pays.required
             },
+            /* Validation automatique pour ce champ, car il doit déclencher la mise à jour du champ ville */
+            validation: "auto",
             choices: paysData
         }),
         cleanPays: function() {
@@ -276,7 +280,7 @@ var FichePartenaireForm = function (partenaireStore:any, intlMessages:any) {
                 invalid: intlMessages.fields.assistCourriel.emailInvalid
             }
         }),
-        photo: FileField(
+        photo: HornetUploadFileField(
             {
                 required: false,
                 label: intlMessages.fields.photo.selection,
@@ -284,8 +288,14 @@ var FichePartenaireForm = function (partenaireStore:any, intlMessages:any) {
                 /*Définir l'url d"accès à l'image affiché en lecture seule*/
                 fileRoute: "partenaires/photo/",
                 fileTitle: intlMessages.fields.photo.altImage,
-                maxSize: "2MB",
-                accept: ["png", "jpg"]
+                widgetAttrs :{
+                    accept: [".png", ".jpg", ".gif", ".bmp", ".pdf", ".xlsx"],
+                    maxSize: "1000000"
+                },
+                errorMessages: {
+                    invalid: intlMessages.fields.photo.fileType,
+                    maxSize: intlMessages.fields.photo.maxSize
+                }
             }
         ),
         commentaire: newforms.CharField({
@@ -310,22 +320,7 @@ var FichePartenaireForm = function (partenaireStore:any, intlMessages:any) {
         errorCssClass: "error",
         requiredCssClass: "required",
         validCssClass: "valid",
-        isFormAsync: true,
-        /* Validation interactive  : la propriété onChange de ce formulaire doit par ailleurs être renseignée */
-        validation: "auto",
-        clean: ["photo", function () {
-            var photo = this.cleanedData.photo;
-            // max is 2Mo
-            if (photo) {
-                if (photo.size > 2097152) {
-                    this.addError("photo", intlMessages.fields.photo.maxSize);
-                }
-
-                if (photo.type && photo.type.indexOf("image") === -1) {
-                    this.addError("photo", intlMessages.fields.photo.imageType);
-                }
-            }
-        }]
+        isFormAsync: true
     });
 
     return form;

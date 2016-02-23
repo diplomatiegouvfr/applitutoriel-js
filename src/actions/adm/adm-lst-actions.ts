@@ -1,4 +1,3 @@
-///<reference path="../../../node_modules/app/hornet-js-ts-typings/definition.d.ts"/>
 "use strict";
 import utils = require("hornet-js-utils");
 import Action = require("hornet-js-core/src/actions/action");
@@ -35,7 +34,7 @@ export class SupprimerSecteur extends Action<ActionsChainData> {
             resolve(retourApi);
         }, (error) => {
             logger.warn("Retour en erreur");
-            reject(new WError(error, this.actionContext.formatMsg(this.actionContext.i18n("error.message.ER-AD-ESE-03"), {"secteurid":  this.payload.id})));
+            reject(new WError(error, this.actionContext.formatMsg(this.actionContext.i18n("error.message.ER-AD-ESE-03"), {"secteurid": this.payload.id})));
         });
     }
 }

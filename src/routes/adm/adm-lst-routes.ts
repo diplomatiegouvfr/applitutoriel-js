@@ -1,10 +1,9 @@
-///<reference path="../../../node_modules/app/hornet-js-ts-typings/definition.d.ts"/>
 "use strict";
 import routerInterfaces = require("hornet-js-core/src/routes/router-interfaces");
 import utils = require("hornet-js-utils");
 import SecteurActions = require("src/actions/adm/adm-lst-actions");
 import Roles = require("src/utils/roles");
-var secteursPage = require("src/views/adm/adm-lst-page");
+var SecteursPage = require("src/views/adm/adm-lst-page");
 
 var logger = utils.getLogger("applitutoriel.routes.adm.adm-lst-routes");
 
@@ -16,7 +15,7 @@ class SecteursRoutes implements routerInterfaces.IRoutesBuilder {
             logger.info("routes SECTEUR / ROUTER VIEW");
             return {
                 actions: [new SecteurActions.ListerSecteurs()],
-                composant: secteursPage,
+                composant: SecteursPage,
                 roles: Roles.ADMIN
             };
         });
@@ -26,12 +25,12 @@ class SecteursRoutes implements routerInterfaces.IRoutesBuilder {
 
             var actions = [];
             actions.push(new SecteurActions.SupprimerSecteur().withPayload({id: id}));
-            //on recharge les secteurs pour prendre en compte la suppression
+            // on recharge les secteurs pour prendre en compte la suppression
             actions.push(new SecteurActions.ListerSecteurs());
 
             return {
                 actions: actions,
-                composant: secteursPage,
+                composant: SecteursPage,
                 roles: Roles.ADMIN
             };
         });
@@ -45,7 +44,7 @@ class SecteursRoutes implements routerInterfaces.IRoutesBuilder {
                     }),
                     new SecteurActions.ListerSecteurs()
                 ],
-                composant: secteursPage,
+                composant: SecteursPage,
                 roles: Roles.ADMIN
             };
         });
@@ -60,7 +59,7 @@ class SecteursRoutes implements routerInterfaces.IRoutesBuilder {
                     }),
                     new SecteurActions.ListerSecteurs()
                 ],
-                composant: secteursPage,
+                composant: SecteursPage,
                 roles: Roles.ADMIN
             };
         });
@@ -113,4 +112,5 @@ class SecteursRoutes implements routerInterfaces.IRoutesBuilder {
         }, "post");
     }
 }
+
 export = SecteursRoutes;

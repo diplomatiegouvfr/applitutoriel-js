@@ -1,7 +1,10 @@
 {
+  // Commentaires autorisés !!
   "applicationTitle": "Application TUTORIEL",
   "errorsTitle": "Une erreur est survenue",
+  "applicationLoading": "Chargement de l'application, veuillez patienter ...",
   "authError": "Authentification refusée: l'utilisateur ne possède pas les droits suffisants pour accéder cette page",
+  "techError": "Une erreur technique est survenue",
   "form": {
     "valid": "Valider",
     "validTitle": "Valider la saisie du formulaire",
@@ -66,7 +69,11 @@
     "prevPage": "< Précédent",
     "nextPage": "Suivant >",
     "lastPage": ">>",
-    "displayAll": "Afficher tout"
+    "10": "10",
+    "50": "50",
+    "100": "100",
+    "displayAll": "Afficher tout",
+    "formatDateInvalid": "Le format du champ « {title} » est incorrect."
   },
   "calendar": {
     "agendaTitle": "Agenda",
@@ -176,7 +183,7 @@
     }
   },
   "header": {
-    "logoTitle": "Accueil - ",
+    "logoTitle": "Hornet - Retour vers la page d'accueil",
     "contentTitle": "Aller au contenu de l' ",
     "menuTitle": "Aller au menu de l' ",
     "planTitle": "Plan de l'application l' ",
@@ -191,7 +198,7 @@
   "navigation": {
     "welcome": "Accueil",
     "accessibility": "Accessibilité",
-    "declarationconformity":"Declaration of conformity",
+    "declarationconformity":"Déclaration de conformité",
     "contact": "Contact",
     "plan": "Plan de l'application",
     "help": "Aide",
@@ -213,6 +220,9 @@
       "listeSecteursTitle": "Affiche la liste des secteurs",
       "repartition": "Répartition"
     }
+  },
+  "application": {
+    "diplonet": "Retour à l'accueil de Diplonet"
   },
   "partenairesListePage": {
     "form": {
@@ -278,13 +288,12 @@
       "filterValidTitle": "Filtrer sur les partenaires",
       "filterCancel": "Annuler",
       "filterCancelTitle": "Annuler les filtres sur les partenaires",
-      "hideFiltering": "Cacher le filtre en cours",
+      "hideFiltering": "Cacher le filtre en cours sur les partenaires",
       "hideFilteringTitle": "Cacher le filtre en cours sur les partenaires",
-      "hideFilter": "Cacher le filtrage",
+      "hideFilter": "Cacher le filtre sur les partenaires",
       "hideFilterTitle": "Cacher le filtre sur les partenaires",
       "showFilter": "Afficher le filtre sur les partenaires",
       "showFiltering": "Afficher le filtre en cours sur les partenaires",
-      "selectedTitle": "Sélectionner le partenaire « {title} »",
       "selectedAllTitle": "Sélectionner tous les partenaires",
       "deselectedAllTitle": "Désélectionner tous les partenaires",
       "sortedByTitle": "Trier les partenaires par {columnTitle} {sortTitle}",
@@ -361,7 +370,7 @@
         },
         "proCourriel": {
           "label": "Courriel pro",
-          "minLength": "Le champ « Courriel pro » doit contenir au moins 3 caractères.",
+          "minLength": "Le champ « Courriel pro » doit contenir au moins 3 characters.",
           "required": "Le champ « Courriel pro » est obligatoire. Veuillez saisir ce champ.",
           "emailInvalid": "Le format du champ « Courriel pro » est incorrect (format attendu: nom@example.com)"
         },
@@ -404,8 +413,9 @@
           "help": "Insérer une photo identifiant l'individu",
           "selection": "Photo de l'individu",
           "altImage": "Photo du Partenaire",
-          "maxSize": "La taille du fichier sélectionné dépasse la taille maximale autorisée",
-          "imageType": "Le type de fichier n'est pas valide (fichier attendu de type image: png, bmp, jpg...)"
+          "maxSize": "La taille du fichier sélectionné dépasse la taille maximale autorisée ({maxSizeInMB} Mo)",
+          "imageType": "Le type de fichier n'est pas valide (fichier attendu de type image: png, bmp, jpg...)",
+          "fileType": "Le type de fichier n'est pas valide. Types attendus : {fileTypeList}"
         },
         "commentaire": {
           "label": "Commentaire (limite 255 caractères).",

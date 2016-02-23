@@ -1,9 +1,7 @@
-///<reference path="../../../node_modules/app/hornet-js-ts-typings/definition.d.ts"/>
 "use strict";
 import newforms = require("newforms");
-var DatePickerField = require("hornet-js-components/src/calendar/date-picker-field");
 
-var SecteurForm = function (intlMessages) {
+var SecteurForm = function (intlMessages:any) {
     return newforms.Form.extend({
         nom: newforms.CharField({
             label: intlMessages.fields.nom.label,
@@ -23,14 +21,10 @@ var SecteurForm = function (intlMessages) {
             required: true,
             errorMessages: {required: intlMessages.descRequired}
         }),
-        date: DatePickerField({
-            label: "test modal",
-            required: false
-        }),
         errorCssClass: "error",
         requiredCssClass: "required",
         validCssClass: "valid"
     });
 };
 
-module.exports = SecteurForm;
+export = SecteurForm;

@@ -1,8 +1,7 @@
-///<reference path="../../../node_modules/app/hornet-js-ts-typings/definition.d.ts"/>
 "use strict";
 import newforms = require("newforms");
-var DatePickerField = require("hornet-js-components/src/calendar/date-picker-field");
-var utils = require("hornet-js-utils");
+var HornetDatePickerField = require("hornet-js-components/src/calendar/date-picker-field");
+import utils = require("hornet-js-utils");
 
 var logger = utils.getLogger("applitutoriel.views.par.par-rpa-form");
 
@@ -29,28 +28,30 @@ var RecherchePartenaireForm = function (secteurStore:any, intlMessages:any):any 
             required: false,
             choices: newforms.util.makeChoices(secteurTab, "id", "nom")
         }),
-        startDate: DatePickerField({
+        startDate: HornetDatePickerField({
             label: intlMessages.fields.startDate.label,
             /* Libellé utilisé comme texte alternatif à l'image du bouton d'ouverture de calendrier */
             title: intlMessages.fields.startDate.title,
             required: true,
             /* Le format de saisie de date par défaut est défini avec la clé calendar.dateFormat dans messages.json
              ou dans hornet-messages-components.json, mais il peut être surchargé ici au format newforms. Par ex.  inputFormats: ["%d/%m/%Y","%d-%m-%Y"], */
-            /* Lorsque le format de saisie n"inclut pas l"année (par exemple "%d/%m"), c"est l"année en cours
-            qui est assignée par défaut. Il est possible de la définir ici avec la propriété defaultYear. Par ex. defaultYear: 2015, */
+            /* Lorsque le format de saisie n'inclut pas l'année (par exemple "%d/%m"), c'est l'année en cours
+             qui est assignée par défaut. Il est possible de la définir ici avec la propriété defaultYear. Par ex. defaultYear: 2015, */
             errorMessages: {
                 required: intlMessages.fields.startDate.required,
                 invalid: intlMessages.fields.startDate.invalid
             }
+            /* permet de surcharger l'icone du calendrier */
+            //imgFilePath: "http://localhost/default"
         }),
-        endDate: DatePickerField({
+        endDate: HornetDatePickerField({
             required: false,
             label: intlMessages.fields.endDate.label,
             /* Libellé utilisé comme texte alternatif à l'image du bouton d'ouverture de calendrier */
             title: intlMessages.fields.endDate.title,
             /* Le format de saisie de date par défaut est défini avec la clé calendar.dateFormat dans messages.json
              ou dans hornet-messages-components.json, mais il peut être surchargé ici au format newforms. Par ex.  inputFormats: ["%d/%m/%Y","%d-%m-%Y"], */
-            /* Lorsque le format de saisie n"inclut pas l"année (par exemple "%d/%m"), c"est l"année en cours
+            /* Lorsque le format de saisie n'inclut pas l'année (par exemple "%d/%m"), c'est l'année en cours
              qui est assignée par défaut. Il est possible de la définir ici avec la propriété defaultYear. Par ex. defaultYear: 2015, */
             errorMessages: {
                 invalid: intlMessages.fields.endDate.invalid
@@ -71,4 +72,4 @@ var RecherchePartenaireForm = function (secteurStore:any, intlMessages:any):any 
     });
 };
 
-module.exports = RecherchePartenaireForm;
+export = RecherchePartenaireForm;

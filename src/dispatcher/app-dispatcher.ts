@@ -1,5 +1,3 @@
-///<reference path="../../node_modules/app/hornet-js-ts-typings/definition.d.ts"/>
-
 "use strict";
 
 import GenericDispatcher = require("hornet-js-core/src/dispatcher/generic-dispatcher");
@@ -13,14 +11,14 @@ import FichePartenaireStore = require("src/stores/par/par-fpa-store");
 import SecteurStore = require("src/stores/adm/adm-lst-store");
 import ProduitStore = require("src/stores/adm/adm-rps-store");
 
-class AppDispatcher extends GenericDispatcher{
+class AppDispatcher extends GenericDispatcher {
 
-    constructor(componentActionErrorHandler?:Function){
+    constructor(componentActionErrorHandler?:Function) {
         var dispatcherConf = undefined;
         if (componentActionErrorHandler) {
             dispatcherConf = {
                 componentActionHandler: componentActionErrorHandler
-            }
+            };
         }
 
         super(dispatcherConf);
