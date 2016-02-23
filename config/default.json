@@ -149,7 +149,7 @@
     "name": "applitutoriel-service"
   },
   "mock": {
-    "enabled": false,
+    "enabled": true,
     "routes": "/mock/routes",
     "defaultServices": {
       // service mock par defaut : le contexte est toujours "applitutoriel/hornet-mock"
